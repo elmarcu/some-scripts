@@ -1,0 +1,44 @@
+#status
+mysql> SHOW ENGINE INNODB STATUS;
+$ sudo mysql -e "SHOW ENGINE INNODB STATUS;" > status.csv
+
+
+#free locks
+#Let's see the list of locked tables
+mysql> show open tables where in_use>0;
+
+#current processes, one of them is locking your table(s)
+mysql> show processlist;
+
+#Kill one of these processes
+mysql> kill <put_process_id_here>;
+
+
+##List database + table + size
+SELECT
+table_schema as `Database`,
+table_name AS `Table`,
+round(((data_length + index_length) / 1024 / 1024), 2) `Size in MB`
+FROM information_schema.TABLES
+ORDER BY (data_length + index_length) DESC;
+
+#espacio real en disco
+sudo du -sh /media/mysql/*
+
+#dump a csv
+mysql -B -u username -p password database -h dbhost -e "SELECT * FROM accounts;" \
+ | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/;s/\n//g"
+
+
+sudo mysqldump --complete-insert --skip-extended-insert --routines --ignore-table={DB.TABLE1, DB.TABLE2} DB > FILE.sql
+sudo mysqldump --no-data [DB] [TABLE] > FILE.sql
+sudo mysqldump --opt --where="1 limit 5000" --routines --ignore-table=DB.TABLE DB > FILE.sql
+sudo mysqldump --routines --ignore-table=DB.TABLE DB > FILE.sql
+
+#user creation
+sudo mysql
+GRANT ALL ON <database_name>.* TO <username>@<remote_server_ip> IDENTIFIED BY '<password>';
+flush privileges;
+
+#example, add truncate in front of every insert
+sed -r 's/INSERT INTO (`[^`]+`)/TRUNCATE TABLE \1; INSERT INTO \1/g' -i [SQL_FILE].sql

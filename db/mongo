@@ -1,0 +1,99 @@
+https://docs.mongodb.com/manual/reference/method/
+https://www.mongodb.com/products/compass (IDE)
+
+#login
+mongo --host HOST -uUSER -pPASS DB --authenticationDatabase admin
+
+#on mongo client
+db.help()
+db.stats()
+db.serverStatus()
+
+.find()
+
+.limit(1)
+
+#dump
+mongodump -d <database_name> --archive' > FILE
+#restore
+mongorestore -d <database_name> < FILE
+
+sudo docker exec -it socket-server_mongo_1 mongo
+use admin
+db.auth('rooter', '[PASSWORD]')
+db.getUsers()
+show dbs
+
+use socket
+db.sessions.stats()
+db.sessions.count()
+
+db.repairDatabase()
+db.runCommand ( { compact: 'sessions'} )
+
+------------------------------------
+
+docker exec -it workspace_mongo_1 mongo --username root --password PASSWORD admin
+db.createUser(
+  {
+    user: "newuser",
+    pwd: "[PASSWORD]",
+    roles: [ { role: "readWrite", db: "[db]" } ]
+  }
+)
+exit;
+docker exec -it workspace_mongo_1 mongo --username [username] --password [PASSWORD] --authenticationDatabase admin [db];
+
+
+db.runCommand( {
+   dropUser: "[USER]",
+   writeConcern: { w: "majority", wtimeout: 5000 }
+} )
+
+------------------------------------
+
+##
+> use admin
+switched to db admin
+> db.auth('rooter', '[PASSWORD]')
+1
+> use socket
+db.sessions.aggregate([
+{
+    '$match': {
+        timestamp: {
+            $lt: (new Date('2021-01-24T12:00:00Z')).getTime(),
+            $gte: (new Date('2021-01-23T11:00:00Z')).getTime()
+        }
+    }
+},
+{
+    '$group': {
+        '_id': {
+            'platformGroup': '$platformGroup',
+        },
+        'pageviews': {
+            '$sum': 1,
+        },
+    },
+}
+]);
+
+#count distinct elements
+db.collection.distinct()
+db.collection.distinct(FIELD_NAME)
+
+
+#intert many or one
+ db.products.insertMany( [
+    { item: "card", qty: 15 },
+    { item: "envelope", qty: 20 },
+    { item: "stamps" , qty: 30 }
+ ] );
+
+#collection reading
+db.collection.find( { _id: 5 } )
+.find( { "name.last": "Hopper" } )
+
+#sorting last records
+db.foo.find().sort({_id:-1});
