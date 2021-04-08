@@ -1,0 +1,98 @@
+Help
+
+https://apps.ubuntu.com / http://www.ubuntuupdates.org / https://launchpad.net
+https://www.debian.org/distrib/packages
+https://snapcraft.io/store
+--
+
+#upgrade OS
+do-release-upgrade -d
+update-manager -d
+--
+
+#blacklist usb video webcam (notebooks)
+sudo -s sh -c 'echo "blacklist uvcvideo" >> /etc/modprobe.d/blacklist.conf'
+sudo service systemd-modules-load restart
+#reinsert
+sudo modprobe uvcvideo
+#reremove
+sudo modprobe -r uvcvideo
+
+#devices connect input
+#list
+xinput
+xinput enable/disable 10
+--
+
+#display-off
+DISPLAY=:0 xset dpms force on
+
+#display-on
+DISPLAY=:0 xset dpms force off
+
+#refresh
+DISPLAY=:0 xdotool key F5
+
+#open url
+DISPLAY=:0 google-chrome -url HTTP_URL
+--
+
+#git shell prompt
+https://github.com/jimeh/git-aware-prompt
+--
+
+subliminal-subtitles download -l en *
+rename 's/search/replace/' files
+#lowercase
+rename 'y/A-Z/a-z/' *
+--
+
+#gsettings (desktop gnome environment settings)
+
+gsettings list-recursively
+
+#list settings on tool
+gsettings list-keys org.gnome.nautilus.desktop
+
+gsettings get org.gnome.nautilus.desktop volumes-visible
+gsettings set org.gnome.nautilus.desktop volumes-visible true
+
+#keyboard source
+gsettings get org.gnome.desktop.input-sources sources
+
+#windows switcher only on current workspace
+gsettings set org.gnome.shell.app-switcher current-workspace-only true
+#windows close buttons on the right
+gsettings set org.gnome.desktop.wm.preferences button-layout 'close,maximize,minimize:'
+#hide icons from Desktop
+gsettings set org.gnome.nautilus.desktop home-icon-visible false
+gsettings set org.gnome.nautilus.desktop trash-icon-visible false
+gsettings set org.gnome.nautilus.desktop network-icon-visible false
+--
+
+#dconf (desktop environment settings)
+#print current settings
+dconf dump /org/gnome/[TOOL]
+
+#shortcuts
+dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/
+
+#workspaces edit using dconf:
+
+#To get the current values:
+dconf read /org/compiz/profiles/unity/plugins/core/hsize
+dconf read /org/compiz/profiles/unity/plugins/core/vsize
+
+#To set new values:
+dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
+dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
+--
+
+#live usb creators
+usb-creator-gtk
+unetbootin
+WoeUSB
+--
+
+#notifications after job finish
+notify-send --urgency=critical -i "$([ $? = 0 ] && echo terminal || echo error)" "FINISHED - $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"
