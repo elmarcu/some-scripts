@@ -1,0 +1,26 @@
+#!/bin/sh
+profile=$(gsettings get org.gnome.Terminal.ProfilesList default | tr "'" " " | awk '{print $1}')
+switch=dark
+from=light
+gedit_scheme='oblivion'
+terminal_dark='rgb(238,238,236)'
+terminal_light='#21252B'
+palette="['rgb(46,52,54)', 'rgb(245,79,79)', 'rgb(124,208,44)', 'rgb(196,160,0)', 'rgb(91,148,222)', 'rgb(117,80,123)', 'rgb(44,176,178)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(233,47,47)', 'rgb(149,228,71)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']"
+
+if [ "'Yaru-$switch'" = $(gsettings get org.gnome.desktop.interface gtk-theme) ]; then
+  switch=light
+  from=dark
+  gedit_scheme='classic'
+  terminal_dark='#21252B'
+  terminal_light='rgb(238,238,236)'
+  palette="['rgb(46,52,54)', 'rgb(128,25,25)', 'rgb(76,132,24)', 'rgb(196,160,0)', 'rgb(18,70,139)', 'rgb(117,80,123)', 'rgb(11,100,101)', 'rgb(64,69,59)', 'rgb(85,87,83)', 'rgb(233,47,47)', 'rgb(149,228,71)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']"
+fi
+
+gsettings set org.gnome.desktop.interface gtk-theme "'Yaru-$switch'"
+gsettings set org.gnome.shell.extensions.user-theme name "'Yaru-$switch'"
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ use-theme-colors false
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ background-color $terminal_light
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ foreground-color $terminal_dark
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ palette "$palette"
+gsettings set org.gnome.gedit.preferences.editor scheme "$gedit_scheme"
+sed -i "s/$from/$switch/" $HOME/.atom/config.cson
