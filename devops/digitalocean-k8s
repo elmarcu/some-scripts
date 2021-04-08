@@ -1,0 +1,27 @@
+#install
+sudo snap kubectl --classic
+
+#Getting nodes from created cluster via digitalogean
+kubectl --kubeconfig kube.yaml get pods
+kubectl --kubeconfig kube.yaml get nodes
+
+kubectl --kubeconfig kube.yaml \
+  --context [CLUSTER-NAME/CONTEXT] \
+  apply -f manifest.yaml
+
+kubectl --kubeconfig kube.yaml \
+  --context [CLUSTER-NAME/CONTEXT] \
+  get service [SERVICE-NAME-FROM-MANIFEST]
+
+
+#install client
+sudo snap install doctl
+
+#digitalocean login
+doctl auth init
+
+doctl k8s cluster list
+
+doctl k8s cluster create [CLUSTER-NAME]
+
+doctl k8s cluster delete [CLUSTER-NAME]

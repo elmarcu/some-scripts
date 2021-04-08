@@ -1,0 +1,55 @@
+#setup
+aws configure
+
+AWS Access Key ID [None]: {ACCESS_KEY}
+AWS Secret Access Key [None]: {SECRET}
+Default region name [None]: us-west-2
+Default output format [None]: json"
+
+(or from file $HOME/.aws/credentials)
+
+#list buckets
+aws s3 ls
+
+#list directories
+aws s3 ls [BUCKET_NAME]
+
+$list all
+aws s3 ls --summarize [BUCKET_NAME] --recursive --human-readable
+aws s3api list-objects --bucket [BUCKET_NAME] --output json --query "[sum(Contents[].Size), length(Contents[])]"
+aws cloudwatch get-metric-statistics --namespace AWS/S3 --start-time 2015-07-15T10:00:00 --end-time 2020-07-31T01:00:00 \
+  --period 86400 --statistics Average --region  --metric-name BucketSizeBytes --dimensions Name=[BUCKET_NAME],Value=[domain] \
+  Name=StorageType,Value=StandardStorage
+
+#find files
+aws s3api list-objects --bucket [BUCKET] --prefix [PATH] --delimiter "" | grep [FILENAME]
+aws s3 ls s3://[BUCKET] --recursive | grep [FILENAME] | cut -c 32-
+
+#copy file
+aws s3 cp file.txt s3://[BUCKET_NAME]/ --storage-class REDUCED_REDUNDANCY/STANDARD_IA
+
+#make already existing key(file) public access
+aws s3api put-object-acl --bucket [BUCKET_NAME] --key [KEY/FILE] --acl public-read
+#cheat para hacer public varios bucket_files
+aws s3 cp s3://[BUCKET_NAME]/[PATH] s3://[BUCKET_NAME]/[PATH] --acl public-read
+
+#move
+aws s3 mv s3://[BUCKET_NAME]/[PATH] s3://[BUCKET_NAME2]/[PATH2] --acl public-read
+
+#sync and public
+aws s3 sync dir/ s3://[BUCKET_NAME]/[PATH]/ [--dryrun --include --exclude --delete --storage-class STANDARD_IA --acl public-read]
+
+#rm
+aws s3 rm s3://[BUCKET_NAME]/[PATH]/ [--dryrun --recursive --exclude "*" --include "SOMEFILE"]
+
+#list distributions
+aws cloudfront list-distributions
+
+#cache invalidation
+aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+
+#mount volume from buckets
+#need password on FILE
+sudo echo $AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY > /etc/passwd-s3fs
+sudo chmod 600 /etc/passwd-s3fs
+sudo s3fs [BUCKET] /mnt/bucket -o passwd_file=/etc/passwd-s3fs -o url=https://s3.amazonaws.com -o dbglevel=info -f -o curldbg

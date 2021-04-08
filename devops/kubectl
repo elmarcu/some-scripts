@@ -1,0 +1,19 @@
+
+sudo snap install kubectl --classic
+
+kubectl version
+kubectl config
+
+#if config file
+kubectl --kubeconfig [KUBEFILE] [COMMAND]
+
+kubectl get nodes
+kubectl get pods
+
+#watch logs
+kubectl logs -f [POD_NAME]
+
+#executin commands
+kubectl exec -it [POD_NAME] -- [CMD]
+
+kubectl exec -it [POD_NAME] bash
