@@ -1,0 +1,63 @@
+#ALIASES $HOME/.bash_aliases
+
+##GIT
+alias gs='git status'
+alias gcm='git commit -am'
+alias gps='git push --no-verify'
+alias gpl='git pull'
+alias gl='git log --oneline --decorate --graph'
+alias gch='git log --pretty=format:"- %s (%h) (%ae) - %cd" --date=short'
+alias gb='git branch'
+alias gc='git checkout'
+alias grb='git rebase master'
+alias gcp='git cherry-pick'
+alias gm='git merge'
+alias gpsf='git push origin --force'
+alias gd='git diff'
+alias grsh='git reset --hard'
+alias grp='git remote prune origin'
+alias gru='git remote get-url origin'
+
+##DOCKER
+alias dup='docker-compose up'
+alias dlog='docker-compose logs -f'
+alias dtail='docker-compose logs -f --tail 20'
+alias dexec='docker-compose exec'
+alias dstop='docker ps -q | xargs docker stop'
+alias drst='docker-compose restart'
+alias ddown='docker-compose down'
+alias dps='watch docker-compose ps'
+alias dinsp='docker inspect -f "{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" $(docker ps -aq)'
+alias dimgs='docker images -a'
+alias drmcontaienrs='docker container prune -f'
+alias drmimages='docker image prune -f'
+alias drmAll='docker system prune --volumes && docker image prune -a'
+alias dsys='tmux new "docker stats --all" ";" split -p 50 "watch docker ps -a"'
+
+##kubectl
+alias kbn="kubectl get nodes -n $KUBE_NAMESPACE"
+alias kbp="kubectl get pods -n $KUBE_NAMESPACE"
+alias kbl="kubectl logs -f -n $KUBE_NAMESPACE"
+alias kbe="kubectl exec -it -n $KUBE_NAMESPACE"
+
+##tmux
+alias tm='tmux'
+alias tmat='tmux at'
+alias tml='tmux list-sessions'
+alias tmatt='tmux attach-session -t'
+alias tmk='tmux kill-session -t'
+
+##SYS
+alias upd='sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean"'
+alias cpu=$HOME/workspace/some-scripts/desktop/throttling-cpu.sh
+alias program=$HOME/workspace/some-scripts/desktop/toggle-program.sh
+alias lights=$HOME/workspace/some-scripts/desktop/toggle-lights.sh
+alias sys=$HOME/workspace/some-scripts/desktop/sys-watcher.sh
+alias vpn=$HOME/workspace/some-scripts/desktop/toggle-vpn.sh
+alias pvpn=$HOME/workspace/some-scripts/desktop/toggle-purevpn.sh
+alias kube=$HOME/workspace/some-scripts/desktop/toggle-kube.sh
+
+##WORK
+dir=$PWD
+cd $HOME/workspace/ && for d in *; do alias $d="cd $HOME/workspace/$d && atom ./ && git status"; done && cd "$dir"
+alias git_updater='cd $HOME/workspace/ && for d in * ; do cd $HOME/workspace/$d'/'; echo "Pulling $d"; git pull; done; cd;'
