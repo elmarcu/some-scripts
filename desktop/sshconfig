@@ -1,0 +1,10 @@
+Host *
+	ForwardAgent yes
+
+Host bitbucket
+	IdentityFile ~/.ssh/id_rsa-bitbucket
+	Hostname bitbucket.org
+
+Host github
+	IdentityFile ~/.ssh/id_rsa-github
+	Hostname github.com
