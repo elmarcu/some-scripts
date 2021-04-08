@@ -94,13 +94,14 @@ sudo systemctl reload cpufrequtils.service
 (crontab -u $USER -l; cat $HOME/workspace/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
 #aliases and configs
-ln -sf $HOME/workspace/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
-ln -sf $HOME/workspace/some-scripts/desktop/pam_environment $HOME/.pam_environment
-ln -sf $HOME/workspace/some-scripts/desktop/sshconfig $HOME/.ssh/config
-ln -sf $HOME/workspace/private/profile.jpg $HOME/.face
-sudo ln -sf $HOME/workspace/private/profile.jpg /var/lib/AccountsService/icons/$USER
-gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/workspace/private/wallpaper.jpg'"
-gsettings set org.gnome.desktop.screensaver picture-uri "'file://$HOME/workspace/private/wallpaper.jpg'"
+cp $HOME/workspace/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
+cp $HOME/workspace/some-scripts/desktop/pam_environment $HOME/.pam_environment
+cp $HOME/workspace/some-scripts/desktop/sshconfig $HOME/.ssh/config
+cp $HOME/workspace/private/profile.jpg $HOME/.face
+sudo cp $HOME/workspace/private/profile.jpg /var/lib/AccountsService/icons/$USER
+cp $HOME/workspace/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
+gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/.wallpaper.jpg'"
+gsettings set org.gnome.desktop.screensaver picture-uri "'file://$HOME/.wallpaper.jpg'"
 
 #desktop settings
 dconf write /system/locale/region "'en_US.UTF-8'"
