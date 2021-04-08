@@ -1,0 +1,147 @@
+#whats my public ip
+curl ifconfig.me
+#my public ip
+ip route | grep default
+ifconfig
+
+#list network drivers installed
+lshw -C network
+lspci -nnk | grep -A2 0280
+
+#watch network usage
+iftop -n
+
+#connect to server and leave tunnel open FORWARDING local port to server port
+ssh SERVER -L PORT:SERVERIP:PORT (-fN background)
+
+#bind_host
+[-D [bind_address:]port]
+--
+
+#list processes
+netstat -alnp   /o/  ps -ef
+
+#kill process by id find by port (network)
+netstat -nap | grep ":9020" | grep CLOSE_WAIT | awk '{print $2}' | cut -d \/ -f1 | grep -oE "[[:digit:]]{1,}" | xargs kill -9
+--
+
+#time laps
+curl -v -s -w :%{time_namelookup}:%{time_connect}:%{time_appconnect}:%{time_pretransfer}:%{time_redirect}:%{time_starttransfer}:%{time_total}\\n  "http://URL/"
+--
+
+#list routing
+sudo iptables -t nat -L -n -v
+#port redirect
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport [source_PortNumber] -j REDIRECT --to-port [destination_PortNumber]
+#open ports for localnetwork
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+##for Removing replace -A with -D
+--
+
+#apache multiple test
+ab -n 100 -c 100 http://sitioweb.com/
+
+--
+
+#measure time curl/(or any command) response
+time curl -vk http://google.com/
+--
+
+netstat -lpn | less
+netstat - anp
+
+#open ports
+netstat -tuplen
+
+ifconfig
+tcpdump -ln -i eth0 host 63(ip) port 7001 | strings -> strings (binutils) Convierte hexa a string
+tcpdump -A -s 0 'tcp port 9000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+tcpdump -v -i any -s 1500 port 9000
+
+#port sniff 9000and print lines that start with GET or Cache-control
+#Extract HTTP User Agent from HTTP request header.
+tcpdump -s0 -w - -i eth0 port 9000 |strings|egrep "^(GET|Cache-control)" -i
+
+#By using egrep and multiple matches we can get the User Agent and the Host (or any other header) from the request.
+tcpdump -nn -A -s1500 -l | egrep -i 'User-Agent:|Host:'
+tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'
+tcpdump -s 0 -v -n -l | egrep -i "POST /|GET /|Host:"
+--
+
+route -n
+route add default gw 192.168.11.1
+route del default gw 10.199.1.65
+ip route del 10.199.1.65 via 0.0.0.0 dev tun0
+route del -net 0.0.0.0 netmask 0.0.0.0 gw 10.199.1.65 tun0
+
+#openvpn2
+openvpn --config /home/USER/USER.tblk/USER.ovpn
+
+#openvpn3 load config
+openvpn3 config-import --config [FILE].ovpn --name [NAME] --persistent
+#Establecer VPN
+openvpn3 session-start --config [NAME]
+#Desconectar VPN
+openvpn3 session-manage --disconnect --config [NAME]
+---
+
+watch -n 1 'netstat -anp | grep 63.251.156.202 -c' << te va a devolver un numero cada 1 segundo
+netstat -anp | grep 63.251.156.202  << te va a mostrar las conexiones y su estado las ESTABLISHED
+ss -tnap | grep 9000 <- procesos corriendo en el puerto 9000
+--
+
+#Dns updater
+wget -O - --http-user=USER --http-passwd=PASSWORD 'http://dynamic.zoneedit.com/auth/dynamic.html?host=HOSTNAME'
+--
+
+#download from ftp
+wget -r ftp://user:pass@server.com/
+curl ftp://ftp.com/mp3/* --user login:password -o /myfolder/*
+scp -r login@myserverip:/remote/directory/path/ mylocaldirectory
+--
+
+#firewall csf
+csf -x (disable)
+csf -e (enable)
+/etc/init.d/csf stop
+csf -a IP_NUEVO (o agregar ip)
+--
+
+#list 20 top connection hosts
+netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
+--
+
+##list all connected ssh sessions
+$ sudo su root -c "netstat -tnpa | grep 'ESTABLISHED.*sshd'"
+##list all process running from connected ssh sessions
+$ sudo su root -c "ps auxwww | grep sshd"
+--
+
+#process count on apache
+lsof -i | grep apache2 | grep ESTABLISHED | wc -l
+--
+
+#to trace all ips from local to remote
+traceroute google.com
+--
+
+#speed test
+curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+fast
+--
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt
+--
+
+#bluetooth
+#list
+bluetoothctl devices
+sudo systemctl status bluetooth
+#info
+bluetoothctl info [MAC-ADDRESS]
+--
+
+#printers
+lpstat -l -e
+lpinfo -v
+avahi-browse -rt _ipp._tcp

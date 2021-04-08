@@ -1,0 +1,65 @@
+#!/bin/sh
+#este scrip manda por mail el ip de site.com (que todavia no se actualizo el dns)
+
+alert_to="mail@to"
+alert_cc="mailcopia@to"
+alert_subject="aviso de ip para site.com"
+alert_message="El ip de site.com es (o debería ser):"
+
+rf=$(mktemp)
+
+wget http://checkip.dyndns.org/ -O - -o /dev/null | cut -d: -f 2 | cut -d\< -f 1 > $rf 2>&1
+
+if [ "$alert_cc" != "" ] ; then
+        cc=" -c $alert_cc "
+
+cat <<EOF | mail -s -u $USER "$alert_subject" $alert_to $cc
+$alert_message
+
+return
+$(cat $rf)
+EOF
+rm $rf
+fi
+
+
+
+INSTRUCCIONES
+
+
+1-script en $HOME/ip_mailer.sh   (en host.17)
+
+2-pico /etc/init.d/ip_mailer
+
+#! /bin/sh
+# /etc/init.d/blah
+#
+
+# Some things that run always
+sh $HOME/ip_mailer.sh
+
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting script blah "
+    echo "Could do more here"
+    ;;
+  stop)
+    echo "Stopping script blah"
+    echo "Could do more here"
+    ;;
+  *)
+    echo "Usage: /etc/init.d/ip_mailer {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
+3-executable by running
+chmod 755 /etc/init.d/ip_mailer
+chmod 755 $HOME/ip_mailer.sh
+
+4-add the appropriate symbolic links to cause the script to be executed when the system goes down, or comes up.
+update-rc.d ip_mailer defaults

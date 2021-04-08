@@ -1,0 +1,52 @@
+
+#PS3 controller on linux USB
+
+sudo xboxdrv --detach-kernel-driver --led 2
+
+sudo xboxdrv --silent --detach-kernel-driver --trigger-as-button --ui-axismap x2=ABS_Z,y2=ABS_RZ --ui-buttonmap A=BTN_B,B=BTN_X,X=BTN_A,TR=BTN_THUMBL,TL=BTN_MODE,GUIDE=BTN_THUMBR
+
+#PS3 controller bluetooth
+sudo apt install bluez
+sudo systemctl enable bluetooth
+sudo systemctl start bluetooth
+sudo systemctl status bluetooth
+bluetoothctl
+agent on
+default-agent
+power on
+discoverable on
+pairable on
+scan on
+
+#PS3 controller bluetooth (older install)
+#sixpair
+
+#install
+sudo apt-get install dialog build-essential pyqt4-dev-tools libusb-dev libbluetooth-dev python-dbus -y
+wget https://github.com/RetroPie/sixad/archive/master.zip -O sixad-master.zip
+unzip sixad-master.zip
+cd sixad-master/
+make
+sudo make install
+
+#(enable bluetooth and plugin joystick usb)
+sudo sixpair
+
+sudo hciconfig hci0
+#si esta down
+sudo hciconfig hci0 up
+
+#en caso de que este blockeado
+rfkill list
+rfkill unblock bluetooth
+
+sudo hciconfig hci0 up
+
+#pair ps3 controller trougth usb
+sudo sixpair
+
+#listen to ps3 controller trougth bluetooth
+sudo sixad -s
+
+#revierte control del bluetooth
+sudo sixad -r

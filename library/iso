@@ -1,0 +1,17 @@
+POWERISO
+
+poweriso convert /[DIR]/xx.bin -o /[DIR]/xx.iso -ot iso
+
+nrg2iso /[DIR]/xx.nrg /[DIR]/xx.iso
+
+mdf2iso /[DIR]/*.mdf /[DIR]/*.iso
+
+ccd2iso /[DIR]/*.img /[DIR]/*.iso
+
+dmg2img /[DIR]/*.dmg
+mv /[DIR]/*.img /[DIR]/*.iso
+--
+
+directory to iso
+genisoimage -o output_image.iso directory_name
+--

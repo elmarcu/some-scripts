@@ -1,0 +1,60 @@
+#list disks attached to system
+sudo lsblk
+
+#show type of FS
+sudo file -s /dev/[DEVICE]
+
+#make FS to device
+sudo mkfs -t [TYPE_FS] /dev/[DEVICE]
+
+#mount device to dir
+sudo mount /dev/[DEVICE] /[DIR]
+
+#filsystem check
+sudo fsck -y /dev/[DEVICE]
+
+#RAID fs list
+sudo mdadm --examine --scan
+#filsystem RAID check
+sudo fsck /dev/md/[VOLUME]
+
+#disk size
+df -k
+du -sm *
+du -hcd 1 /[DIR]
+
+df -h
+du -h /[DIR]
+du -hs *|sort -n
+
+
+#block count
+du /[DIR]
+du -sh /* | sort -n
+du -sh */ .*/* | sort -n | grep G
+
+#inode count
+df -i
+#loop dirs and count inodes
+cd /[DIR]; for i in *; do echo -n $i,; find $i -print | wc -l; done
+
+
+#mounting a fs through ssh (sudo apt-get install sshfs)
+
+#via /etc/fstab
+```
+# <file system>       <mount point>         <type>  <options>
+sshfs#[USER]@[SERVER]:/[DIR]/    /[LOCAL_DIR]    fuse    comment=sshfs,noauto,users,exec,uid=1000,gid=1000,allow_other,reconnect,transform_symlinks,BatchMode=yes 0 0
+```
+
+#via command line
+sshfs -o idmap=user,reconnect,follow_symlinks,workaround=rename [USER]@[HOST]:/[DIR]/ /[LOCAL_DIR]/
+
+--
+
+#mount dir as CDROM
+bindfs -n /DIR-SOURCE/ /DIR-MOUNTED/
+
+#unmount
+fusermount -u /DIR-MOUNTED/
+--

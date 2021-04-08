@@ -1,0 +1,186 @@
+#pdf compress
+
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -sOutputFile=output.pdf input.pdf
+
+gs -q -dNOPAUSE -dBATCH -dSAFER -dPDFA=2 -dPDFACompatibilityPolicy=1 -dSimulateOverprint=true -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dAutoRotatePages=/None -dColorImageDownsampleType=/Bicubic -dColorImageResolution=300 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=300 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=300 -sOutputFile=output.pdf input.pdf
+
+#to blacknwhite
+ghostscript \
+  -sOutputFile=output.pdf \
+  -sDEVICE=pdfwrite \
+  -sColorConversionStrategy=Gray \
+  -dProcessColorModel=/DeviceGray \
+  -dCompatibilityLevel=1.4 \
+  -dNOPAUSE \
+  -dBATCH \
+  [INPUT.PDF]
+
+#scaling pdf
+gs -o output.pdf -sDEVICE=pdfwrite -dPDFFitPage -r300x300 -g2550x3300 input.pdf
+r is for resolution in dots per inch (in horizontal and in vertical direction). g is for page dimensions in pixels (in horizontal and in vertical direction)
+
+convert original.pdf -density "300" -resize "2550x3300" resized.pdf
+
+#pdf to jpg
+convert -density 300 file.pdf page_%04d.jpg
+convert -density 300 -background white -alpha remove file.pdf page_%04d.jpg
+
+#jpg to pdf
+convert *.jpg pictures.pdf
+
+#svg to jpg
+convert -density 256x256 -background transparent favicon.svg -define icon:auto-resize -colors 256 favicon.ico
+
+#ebook to pdf [calibre package]
+ebook-convert "book.epub" "book.mobi"
+ebook-convert "book.azw3" "book.pdf"
+--
+
+#iso disk cd/dvd
+
+blank rewritable disk
+sudo chmod +s /usr/bin/wodim
+wodim -vv dev=/dev/cdrw blank=all
+
+dvd+rw-format -blank /dev/cdrw
+
+(full replace bytes)
+dd if=/dev/zero bs=1M count=4482 of=/dev/sr0
+
+https://help.ubuntu.com/community/CdDvd/Burning
+(brasero GUI interface)
+
+(media to iso)
+sudo dd if=/dev/sdx of=/path/to/new.iso
+------------
+
+
+achica las imagenes a la mitad por heigh y width >
+
+gimp -i -b '(gimp-image-resize "*.jpg" width height x-offset y-offset)' -b '(gimp-quit 0)' (no funca)
+convert '*.jpg[300x>]' *.jpg | convierte todo lo q sea mayor a 300px
+
+mogrify -path folder1 -thumbnail 50x50 folder2/*.jpg
+mogrify -resize 50% *.jpg
+
+Resize to 640×480 (maximum width and height), keep the aspect ratio
+mogrify -resize 640x480 *.jpg
+
+Resize to fixed width of 640, keep the aspect ratio
+mogrify -resize 640 *.jpg
+
+Resize to fixed height of 480, keep the aspect ratio
+mogrify -resize x480 *.jpg
+
+Resize to exact 640×480, change aspect ratio if necessary
+mogrify -resize 640x480! *.jpg
+
+Resize to 50% of original size, keep the aspect ratio
+mogrify -resize 50% *.jpg
+
+Resize images that are less than 640 pixel wide to 640px wide (image wider will be ignored)
+mogrify -resize 640"<" *.jpg
+
+Resize images that are more than 480 pixel height to 480px height (image image shorter will be ignored)
+mogrify -resize x480">" *.jpg
+
+Resize images to no larger than 640×480 (images with width and height less than 640 or 480 will be ignored)
+mogrify -resize 640x480">" *.jpg
+
+Resize images to 100K pixels
+mogrify -resize 100000 *.jpg
+--------
+
+
+FFMPEG
+
+#metadata
+ffmpeg -i FILE 2>&1 | grep Video
+ffmpeg -i FILE 2>&1 | grep Duration
+
+#video to gif
+
+ffmpeg -y -ss 2 -t 3 -i VID.MP4 -vf fps=10,scale=320:-1:flags=lanczos,palettegen palette.png
+
+ffmpeg -ss 9 -t 3 -i VID.MP4 -i palette.png -filter_complex "fps=10,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif
+
+
+#change cover on mp3files
+
+ffmpeg -i input.mp3 -i cover.jpg -map_metadata 0 -map 0 -map 1 output.mp3
+for f in ./*.mp3; do ffmpeg -i "$f" -i cover.jpg -map_metadata 0 -map 0 -map 1 out-"${f#./}"; done
+
+list full metadata
+ffprobe FILE.MP3 2>&1 | grep -A90 'Metadata:'
+
+edit mp3 metadata
+ffmpeg -i output.mp3 -metadata encoded_by="" -metadata publisher="" -metadata comment="" output2.mp3
+
+crop mp3
+ffmpeg -ss 0 -t 30 -i inputfile.mp3 -acodec copy outputfile.mp3
+
+1) Image Scaling
+
+For reducing or increasing size of an image we can use ffmpeg  by this command
+1.ffmpeg - i input.png -vf scale=w:h output.png
+2.//where  -i is input parameter,  w is width of image in pixels ,  h  is height of image in pixels and output.png output file name
+3.eg .ffmpeg - i input.png -vf scale=310:240 output.png
+ffmpeg -i input.png -vf scale=310:ih*240/iw output.png
+ffmpeg -i input.jpg -vf scale="'if(gt(a,1/1),320,-1)':'if(gt(a,1/1),-1,240)'" output.png
+
+
+2) cropping
+To get the a part  of an image ffmpeg can be use
+ffmpeg -i input.png -vf  "crop=w:h:x:y" input_crop.png
+w : width , h height , x and y are the left top coordinates of image
+
+3) scrapping videos
+ffmpeg -i test.mp4 -vf scale=640:480,fps=1/60 img%03d.jpg
+
+--
+
+
+#video reduce quality
+
+ffmpeg -i INPUT.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus output.webm
+ffmpeg -i INPUT.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus -strict -2 output.mp4
+
+ffmpeg -b 901 -i INPUT.mp4 OUTPUT.mp4
+
+--
+
+#get frame
+ffmpeg -i INPUT.mp4 -ss 00:00:07.000 -vframes 1 thumb.jpg
+ffmpeg -i example.mov -vf fps=29.970030 out%d.png
+
+#get video
+ffmpeg -ss 00:00:30 -i INPUT.mp4 -t 00:00:05 -vcodec copy -acodec copy OUTPUT.mp4
+
+#strip audio from video
+ffmpeg -i example.mkv -c copy -an example-nosound.mkv
+
+#extract audio
+ffmpeg -i example.mov example.mp3
+
+#find replace color:
+mogrify -fuzz 0% -fill 'rgb(39,40,55)' -opaque 'rgb(37,40,60)' out*.png
+
+--
+
+#convert xls to csv using package gnumeric
+ssconvert FILE.xls FILE.csv
+
+--
+
+#Joining *.avi.001, *.avi.002 etc video files
+sudo apt install p7zip-full
+#And then give it the name of the first file:
+7z x myvideo.avi.001
+
+#For joining individual video files, there's mencoder, which works with wildcards.
+sudo apt install mencoder
+mencoder -ovc copy -oac copy -forceidx -o allvids.avi vid*.avi
+
+#If you want to join WMV files, there's asfbin
+ls vid*.wmv > vidlist
+./asfbin-bin -l vidlist -o allvids.wmv

@@ -1,0 +1,17 @@
+[setting a private public key]
+host1 -> host2
+
+#key gen on host
+host1# ssh-keygen -t rsa
+
+#send key to server
+host1# scp /home/[user_host1]/.ssh/id_rsa.pub [user_host2]@[user_host2]:/home/[user_host2]/.ssh/
+
+#on the server
+ssh [user_host2]@[user_host2]
+
+#add key to authorized keys
+cd /home/[user_host2]/.ssh/
+cat id_rsa.pub >> authorized_keys
+rm id_rsa.pub
+chmod 600 authorized_keys

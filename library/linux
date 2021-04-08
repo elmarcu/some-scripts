@@ -1,0 +1,441 @@
+
+#distro version
+uname -a
+cat /etc/*release
+cat /etc/issue
+lsb_release -a
+hostnamectl
+
+#hardware
+lshw
+inxi -Fxzd
+lscpu
+
+#cpu speed
+cpufreq-info
+cat /proc/cpuinfo | grep Hz
+
+#changing clocks freq
+cpupower frequency-set -d 800MHz
+cpupower frequency-set -u 2.7GHZ
+cpupower --cpu all frequency-set --freq 2GHz
+cpupower frequency-set --governor ondemand
+
+#check battery status
+upower -e
+upower --dump
+
+#repository
+/etc/apt/sources.list
+
+#updates
+apt update && apt install x-app
+apt upgrade -y && apt dist-upgrade -y
+
+#clean System
+apt autoremove -y && apt autoclean -y && apt clean
+--
+
+#packages alternatives
+update-alternatives --list NAME
+update-alternatives --config NAME
+apt-cache search NAME | sort | less
+apt install NAME -> elijo ese x default de todas las alternativas q hay
+--
+
+$remove packages
+dpkg -i packagename.deb
+dpkg -r packagename
+dpkg-reconfigure packagename
+dpkg-query -L packagename (where is installed)
+dpkg -s NAME (version of package)
+--
+
+To get a list of packages installed locally do this in your terminal:
+
+dpkg --get-selections | grep -v deinstall
+(The -v tag "inverts" grep to return non-matching lines)
+
+To get a list of a specific package installed:
+
+dpkg --get-selections | grep postgres
+To save that list to a text file called packages on your desktop do this in your terminal:
+
+dpkg --get-selections | grep -v deinstall > $HOME/Desktop/packages
+Alternatively, simply use
+
+dpkg -l
+
+#fixing errors parse archive
+dpkg -i --force-overwrite [FILE.deb]
+
+apt --installed list
+(you don't need to run any of theses commands as the superuser, so no necessary here)
+
+apt-cache show PACK
+lists details of package
+--
+
+repositorios 3eros
+add-apt-repository ppa:/blabla  && apt update && apt install custompkg
+ppa-purge ppa:/blabla
+--
+
+#soft sources keys
+apt-key list
+apt-key #add adds a key to /etc/apt/trusted.gpg
+apt-key del [KEY]
+apt-key adv --keyserver keys.gnupg.net --recv-keys [KEY] #update the key
+apt update && apt upgrade
+--
+
+#find packages installed from custom server
+#!/bin/bash
+
+server=$1
+
+apt-cache policy $(dpkg -l | awk 'NR >= 6 { print $2 }') |
+  awk -v server="$server" \
+    '/^[^ ]/      { split($1, a, ":"); pkg = a[1] }
+    nextline == 1 { nextline = 0; if ($2 == server) print pkg }
+    /\*\*\*/      { nextline = 1 }'
+
+
+Antes de instalar examinar un paquete
+apt cache show nginx
+
+--
+
+snap list
+snap install [PACKAGE]
+snap remove [PACKAGE]
+snap connect [PACKAGE]:removable-media core
+snap refresh #updates
+
+--
+
+##EFI boot
+efibootmgr
+
+##add partition to grub2
+grub-install /dev/sda4
+vim /boot/grub/grub.cfg
+vim /etc/default/grub
+update-grub
+
+#show boots
+efibootmgr -v
+-BootCurrent: 0000
+-Timeout: 0 seconds
+-BootOrder: 0000,0001,0003
+-Boot0000* rEFInd Boot Manager   HD(1,28,96000,bc34b60c-6611-492f-99b0-d2c37bd77f48)File(\EFI\refind\shim.efi)
+-Boot0001* fedora    HD(1,28,96000,bc34b60c-6611-492f-99b0-d2c37bd77f48)File(\EFI\fedora\grubx64.efi)
+-Boot0003* ubuntu    HD(1,28,96000,bc34b60c-6611-492f-99b0-d2c37bd77f48)File(EFI\Ubuntu\grubx64.efi)
+#Then try deleting an entry XX using the following code
+efibootmgr -b XX -B
+
+ls /boot/efi/EFI
+rm -r /boot/efi/EFI/XXXXX
+update-grub
+--
+
+#CPU
+atop  / top / Iotop -o / htop
+
+#memoria
+free -h
+
+#Procesos
+ps aux / ps fax / lsof [PROCESS]
+lsoft -n -p 32282
+htop
+
+#disk
+iostat -y 5
+iotop -o
+dstat
+atop 1
+IOPING
+
+#server time
+uptime
+
+#run cmd every 20s
+watch -n 20 [CMD]
+--
+
+##core temperature issues
+while [ 1 ]; do sensors > $HOME/Downloads/sensors-"$(date +%d-%H:%M:%S)".log; echo q | htop | aha --black --line-fix > $HOME/Downloads/sensors-"$(date +%d-%H:%M:%S)".html; sleep 60; done;
+
+#thermald service que manipula el cpu usage para mantener low temperature
+systemctl stop thermald && systemctl disable thermald
+--
+
+#history cmd search
+	> crtl+R
+	> grep "[SOMETHING]" .bash_history
+
+#list files order by last modified date
+ls -thal /tmp/
+
+#list files permissions
+ls -la /tmp/
+stat -c '%a - %A - %n' ./*
+
+#copy to clip any result
+ls -la | xclip -selection c
+
+#file description
+file -i [FILE]
+
+#file encoding convert
+iconv -f [charset_from=iso-8859-1] -t [charset_to=UTF-8] [FILE-INPUT] -o [FILE-OUTPUT]
+
+#concat direcotry and files names
+> for f in *.txt; do echo "----------------<$f>----------------"; cat "$f"; done >> [FILE-OUTPUT]
+
+#zip dir
+tar -zcvf /destination/file.tar.gz --exclude dirToExclude /source/dir/
+#extract file
+tar -xvf file.tar.gz
+#encrypt
+tar cz folder_to_encrypt | openssl enc -aes-256-cbc -e > out.tar.gz.enc
+#Decrypt
+openssl enc -aes-256-cbc -d -in out.tar.gz.enc | tar xz
+--
+
+useradd -mg -G GROUP1;GROUP2 -s /bin/bash $USER && passwd $USER
+
+useradd $USER && passwd $USER
+export HOME=/home/USERDIR
+usermod -m -d $HOME $USER && mkdir $HOME && chown -R $USER:$USER $HOME && adduser $USER GROUPNAME
+
+usermod -aG $USER
+
+#without password
+visudo
+USERNAME ALL=(ALL) NOPASSWD: ALL
+
+#change shell
+usermod --shell /bin/bash $USER
+--
+
+#run cmd as user
+-u USERNAME -i CMD
+--
+
+#user detail	> id
+			> groups
+add user to group	> usermod -G groupX -a userX
+usermod -m -d /newhome/$USER $USER
+
+send a file		> scp /dir/file user@host:/dir/
+--
+
+Execute a command on user logon
+scripts in $HOME/.xprofile
+--
+
+file detail 	> file FILE_NAME
+Top process 		> top -d 0.1
+Find process 		> ps e | grep PROCESS_NAME
+Find file 		> find / -name NAME_TO_FIND
+process list		> ps fax
+
+Find the zombie (The question answered this part):
+ps aux | grep 'Z'
+
+Find the zombie's parent:
+pstree -p -s CHILDRENPID
+--
+
+#kill process by id find by name
+ps aux | grep 'PROCESS' | awk '{print $2}' | xargs kill -9
+killall PROCESS
+
+#pause a process
+ps aux | grep '[PROGRAM]' | awk '{print $2}' | head -n 1 | xargs kill -STOP
+#resume a process
+ps aux | grep '[PROGRAM]' | grep Tsl | awk '{print $2}' | xargs kill -CONT
+--
+
+#follow file changes
+tail -f LOGFILE
+--
+
+#get all lines not commented from file
+grep -vE '^$|^#' FILE
+--
+
+#search txt
+within files		> grep "text" -r /DIR/
+
+tar find result		> find / -name tomboy | xargs tar -zcvf /home/user/file.tar.gz
+
+#rename bulk files | -n dry-run
+rename 's/FIND/REPLACE/g' /DIR/*
+#rename directories
+rename 's/FIND/REPLACE/' **
+
+
+#replace string in file
+sed -i 's/search/replace/g' file
+
+#search and replace keyvalue
+cat testing | sed -r 's@&nextsongid=([-_a-zA-Z0-9]*)@@' > a
+
+#search on dir, files containg text and replace
+grep -lR TEXTO_BUSCAR DIR* | xargs sed -i 's/TEXTO_BUSCAR/TEXTO_REEMPLAZO/g'
+--
+
+#distinct of every occurrence
+grep "TEXT" FILE | awk '{print $1}' | sort | uniq
+#count
+grep -Po 'SOMETEXT-TO-FIND' FILE | awk -F\" '{print $1}' | sort | uniq -c | sort -nr | head -20
+#concat first row
+grep "SOMETEXT" FILE | awk '{print $1}' | awk '{s+=$1} END {printf "%.0f", s}'
+#split url from / into columns and bring column3
+cat a.txt | tr '/' ' '  |  awk  '{print $3}'
+--
+
+#dif compare
+diff -qr /dirA /dirB
+
+#rsync
+rsync -avz --delete --info=progress2 --dry-run /dirA /dirB
+rsync -nrv --include="*/" --include="file_11*.jpg" --exclude="*" /SOURCE/ /DESTINATION/
+--
+
+#count files older than 10 days
+find ./ -type f -mtime +10 | wc -l
+#remove them
+find ./ -type f -mtime +10 | xargs rm
+#count files older than 1 hour
+find /var/lib/php5/ -type f -cmin +60 | wc -l
+#remove them
+find /var/lib/php5/ -type f -cmin +60 -delete
+#other way to remove files
+find /dir/ -type f -exec rm -v {} \;
+find /dir/ -type f -delete
+
+#seek and destroy
+find /DIR/ -iname "*FILEEXTRACT*" -delete
+find . | grep [SOMETHING] | xargs -I FILE rm -f FILE
+
+#seudo dry run to remove files
+find . -name "*.txt" -print
+find . -name "*.txt" -delete
+
+#change permissions on found files
+find /images/ -type f -print0 -name *.jpg -or -name *.png -or -name *.jpeg | xargs -0 chmod 755
+
+#files not owned by
+find DIR \! -user USER -print
+#files owned by
+find DIR  -user USER
+
+#find and change metadata
+find /home/user/dir/ -name *.mp3 | xargs -0 mp3info -a ejem
+--
+
+#purge logs
+cat /dev/null > /var/log/mysql5/mysql5.log
+cat /dev/null > /var/log/maillog
+cat /dev/null > /var/mail/USER
+
+truncate -s 0 <logfile>
+--
+
+#Read maill
+cat /var/mail/$USER
+#Mail aliases
+vim /etc/aliases
+/usr/lib/sendmail -bi
+#SEND Mail
+echo "Subject: sendmail test $(date)" | sendmail -v $USER
+--
+
+scan dir, show infected > clamscan -ir /home/user/dir/
+clamscan -ri ./ | grep FOUND >> $HOME/found.txt
+--
+
+symbolic link		> ln -s target_path link_path
+--
+
+#large file split
+split -b200000 FILE.zip
+split -n50 FILE
+#join back
+cat FILE* > FILE.zip
+
+--
+#file count script example
+
+#!/bin/bash
+# count_em - count files in all subdirectories under current directory.
+echo 'echo $(ls -a "$1" | wc -l) $1' >/tmp/count_em_$$
+chmod 700 /tmp/count_em_$$
+find . -type d -print0 | xargs -0 -n1 /tmp/count_em_$$ | sort -n
+rm -f /tmp/count_em_$$
+--
+
+#add program to startup
+chmod 755 /etc/init.d/SERVICE
+chmod +x /etc/init.d/SERVICE
+chown root:root /etc/init.d/SERVICE
+update-rc.d SERVICE defaults
+update-rc.d SERVICE enable
+--
+
+#MOVE AND RENAME WITH NRO
+mv --backup=numbered /[DIR_SOURCE]/$1 /[DIR_DESTINATION]/$1
+--
+
+#run command with other timezone
+TZ=America/Buenos_Aires CMD
+
+#configure timezone
+dpkg-reconfigure tzdata
+--
+
+#close last window (chrome) opened
+wmctrl -ic "$(wmctrl -l | grep 'Google' | tail -1 | awk '{ print $1 }')"
+--
+
+#last month
+date -d "$(date +%Y-%m-01) -1 day" +%d/%m/%Y
+date -d "$(date +%Y-%m-01) -1 month" +%d/%m/%Y
+--
+
+#loop CMD
+for i in $(seq 1 $END); do echo $i; done
+#loop CMD 4ever
+while true; do echo Keep running; sleep 3; done
+
+#retry CMD until success
+a=false; until $a; do echo "Sleeping"; sleep 1; a=false; done;
+
+#check arg dolar cost every 30seconds
+while [ 1 ]; do echo -n "Cotizacion `date` -----> " ; curl https://banco.santanderrio.com.ar/exec/cotizacion/index.jsp … 2> /dev/null | grep \<td\> | head -n 2 | cut -d " " -f 2 | cut -d "<" -f 1 | tail -n 1; sleep 30; done;
+
+#grep loop results
+COMMAND-RESULTS | xargs -I {} grep {} FILES
+--
+
+#several txt File Joining / concatenating
+cat *.txt > all.txt
+
+#save cmd to file
+sh COMMAND.sh | tee FILE
+--
+
+#reading csv file
+while IFS=, read -r field1 field2
+do
+    echo "$field1 and $field2"
+done < [FILE].csv
+
+#reading file
+for i in $(cat file); do
+    echo "$i"
+done

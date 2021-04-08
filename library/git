@@ -1,0 +1,100 @@
+
+#git puller
+cd $HOME/workspace/ && for d in * ; do cd $HOME/workspace/$d'/'; echo "Pulling $d"; git pull; done; cd;
+
+#git clone commands
+cd $HOME/workspace/ && for d in * ; do cd $HOME/workspace/$d'/'; echo "git@bitbucket.org:batanga-ar/$d.git"; done; cd;
+
+#old project backups
+cd $HOME/workspace/ && for d in * ; do echo "Compressing $d"; tar -zcvf $HOME/archived_workspace/$d.tar.gz --exclude .git $d; done; cd;
+
+#cache local
+git stash
+git stash list
+git stash pop
+
+#This will list all branches which contain the commits from "branch-to-delete". If it reports more than just "branch-to-delete", the branch has been merged.
+git branch --contains branch-to-delete
+
+#To see a list of which commits are on one branch but not another, use git log:
+git log oldbranch ^newbranch --no-merges
+
+git log staging ^origin/staging --no-merges
+
+#git log author
+git log --author='\(Adam\)\|\(Jon\)'
+
+#Delete ALL local tags.
+git tag -l | xargs git tag -d
+
+#Fetch remote tags.
+git fetch
+
+#Delete remote tags.
+git tag -l | xargs -n 1 git push --delete origin
+
+#Delete local tags.
+git tag -l | xargs git tag -d
+
+#To delete all local branches that are already merged into the currently checked out branch:
+git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+
+#You can see that master and dev are excluded in case they are an ancestor.
+#You can delete a merged local branch with:
+git branch -d branchname
+
+#If it's not merged, use:
+git branch -D branchname
+
+#To delete it from the remote in old versions of Git use:
+git push origin :branchname
+
+#In more recent versions of Git use:
+git push --delete origin branchname
+
+#Once you delete the branch from the remote, you can prune to get rid of remote tracking branches with:
+git remote prune origin
+
+#or prune individual remote tracking branches, as the other answer suggests, with:
+git branch -dr branchname
+
+
+#rename local branch
+git branch -m new-name
+git branch -m old-name new-name
+
+#Delete the old-name remote branch and push the new-name local branch.
+git push origin :old-name new-name
+
+
+###REPOs CLEANUP
+
+#local
+git branch | egrep -v "(^\*|develop)"
+git branch | egrep -v "(^\*|develop)" | xargs git branch -D
+
+#remote
+git remote prune origin
+git branch -r | egrep -v "(^\*|master|develop)" | sed -e "s/origin\///"
+git branch -r | egrep -v "(^\*|master|develop)" | sed -e "s/origin\///" | xargs git push origin --delete --no-verify
+
+
+#code line count
+find ./ | egrep -v "(google-api|fonts|theme|.git|assets|images|.jpg|.png|libs)" | xargs wc -l
+find ./app/ | xargs wc -l
+find ./ | egrep -v "(.pyc|.csv|.sql)" | xargs wc -l
+find ./src/ | xargs wc -l
+
+#git backup to tar files
+
+cd $HOME/workspace/ && for d in * ; do cd $HOME/workspace/$d'/'; echo "pulling $d"; git checkout master && git reset --hard && git pull; cd $HOME/workspace; tar --exclude '.git' --exclude 'assets' --exclude 'theme' -zcvf $HOME/$d.tar.gz $d; done;
+
+#from git log to JIRA
+grep ZEN | sed -E "s/(.*)Merged in (.*)/\2/" | sed -E "s/(.*) \((.*)/\1/" | sed "s/ZEN/https:\/\/batanga.atlassian.net\/browse\/ZEN/" | xargs google-chrome
+grep VIXLENS | sed -E "s/(.*)Merged in (.*)/\2/" | sed -E "s/(.*) \((.*)/\1/" | sed "s/VIXLENS/https:\/\/batanga.atlassian.net\/browse\/VIXLENS/" | xargs google-chrome
+
+#from git current branch to merge - 4 deploy
+git remote get-url origin | sed -E "s/.git/\/branch\/$(git branch | grep \* | cut -d " " -f2)/" | sed -E "s/git@bitbucket.org:/https:\/\/bitbucket.org\//" | xargs google-chrome
+
+#looking for vars in .env and in replicaset
+for data in $(cat .env.dist.prod | tr '=' ' ' | awk '{print $1}'); do echo looking for $data; grep $data manifests/production/replicaset.yml; echo ""; done
