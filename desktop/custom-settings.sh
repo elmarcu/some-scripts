@@ -93,7 +93,8 @@ sudo systemctl reload cpufrequtils.service
 #crontab
 (crontab -u $USER -l; cat $HOME/workspace/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
-#aliases and configs
+#desktop executables, aliases and configs
+cp -r $HOME/workspace/some-scripts/desktop/executables $HOME/.executables
 cp $HOME/workspace/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
 cp $HOME/workspace/some-scripts/desktop/pam_environment $HOME/.pam_environment
 cp $HOME/workspace/some-scripts/desktop/sshconfig $HOME/.ssh/config
