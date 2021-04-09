@@ -72,7 +72,10 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.selected_editor
 
 #bash_personal_envs
-cat $HOME/workspace/private/bash_env_vars >> $HOME/.bashrc
+while read p; do
+  export "$p"
+  echo "export $p" >> $HOME/.bashrc
+done < $HOME/workspace/private/bash_env_vars
 
 #workspace
 mkdir $HOME/workspace
