@@ -1,1 +1,1 @@
-30 12,15,17 * * * cd $HOME/workspace && for d in * ; do tar $GIT_BACKUPS_EXCLUDES -zcf "$HOME/$GIT_BACKUPS_DESTINATION/$d.tar.gz" $d; done;
+30 12,15,17 * * * cd $WORKSPACE && for d in * ; do tar $GIT_BACKUPS_EXCLUDES -zcf "$HOME/$GIT_BACKUPS_DESTINATION/$d.tar.gz" $d; done;

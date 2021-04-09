@@ -1,10 +1,5 @@
 ##!/usr/bin/env bash
 
-#ssh keys, isntead of creating new sshkey-gen, use thease
-cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $HOME/workspace/private/codes.tar.gz.enc | tar xz
-#secrets
-cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in passwd.tar.gz.enc | tar xz
-
 #sudoer
 sudo update-locale LANG=en_US.UTF-8 LANGUAGE=en_US
 sudo usermod -aG sudo $USER
@@ -71,17 +66,25 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 ' >> $HOME/.bashrc
 sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.selected_editor
 
+#workspace
+export WORKSPACE="$HOME/workspace"
+mkdir $WORKSPACE
+cd $WORKSPACE
+git config --global user.email "$EMAIL"
+git config --global user.name "$NAME"
+git clone git@github.com:elmarcu/some-scripts.git
+git clone git@github.com:elmarcu/private.git
+
 #bash_personal_envs
 while read p; do
   export "$p"
   echo "export $p" >> $HOME/.bashrc
-done < $HOME/workspace/private/bash_env_vars
+done < $WORKSPACE/private/bash_env_vars
 
-#workspace
-mkdir $HOME/workspace
-git config --global user.email "$EMAIL"
-git config --global user.name "$NAME"
-git clone git@github.com:elmarcu/some-scripts.git
+#ssh keys, isntead of creating new sshkey-gen, use thease
+cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $WORKSPACE/private/codes.tar.gz.enc | tar xz
+#secrets
+cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in passwd.tar.gz.enc | tar xz
 
 #boot options
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/' /etc/default/grub
@@ -94,17 +97,17 @@ sudo systemctl disable ondemand.service
 sudo systemctl reload cpufrequtils.service
 
 #crontab
-(crontab -u $USER -l; cat $HOME/workspace/private/bash_env_vars ) | crontab -u $USER -
-(crontab -u $USER -l; cat $HOME/workspace/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
+(crontab -u $USER -l; cat $WORKSPACE/private/bash_env_vars ) | crontab -u $USER -
+(crontab -u $USER -l; cat $WORKSPACE/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
 #desktop executables, aliases and configs
-cp -r $HOME/workspace/some-scripts/desktop/executables $HOME/.executables
-cp $HOME/workspace/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
-cp $HOME/workspace/some-scripts/desktop/pam_environment $HOME/.pam_environment
-cp $HOME/workspace/some-scripts/desktop/sshconfig $HOME/.ssh/config
-cp $HOME/workspace/private/profile.jpg $HOME/.face
-sudo cp $HOME/workspace/private/profile.jpg /var/lib/AccountsService/icons/$USER
-cp $HOME/workspace/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
+cp -r $WORKSPACE/some-scripts/desktop/executables $HOME/.executables
+cp $WORKSPACE/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
+cp $WORKSPACE/some-scripts/desktop/pam_environment $HOME/.pam_environment
+cp $WORKSPACE/some-scripts/desktop/sshconfig $HOME/.ssh/config
+cp $WORKSPACE/private/profile.jpg $HOME/.face
+sudo cp $WORKSPACE/private/profile.jpg /var/lib/AccountsService/icons/$USER
+cp $WORKSPACE/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
 gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/.wallpaper.jpg'"
 gsettings set org.gnome.desktop.screensaver picture-uri "'file://$HOME/.wallpaper.jpg'"
 
@@ -151,6 +154,6 @@ sh $HOME/.executables/toggle-lights.sh
 
 #secrets-backup
 cd $HOME/.ssh/ && tar cz access-* | openssl enc -aes-256-cbc -pbkdf2 -e > $HOME/.ssh/passwd.tar.gz.enc && rm access-*
-cd $HOME/.ssh/ && tar cz --exclude config * | openssl enc -aes-256-cbc -pbkdf2 -e > $HOME/workspace/private/codes.tar.gz.enc
+cd $HOME/.ssh/ && tar cz --exclude config * | openssl enc -aes-256-cbc -pbkdf2 -e > $WORKSPACE/private/codes.tar.gz.enc
 
 sudo service gdm3 restart
