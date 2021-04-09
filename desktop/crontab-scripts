@@ -1,1 +1,1 @@
-30 12,15,17 * * * cd $HOME/workspace && for d in * ; do tar --exclude 'node_modules' --exclude 'images' --exclude 'imagenes' --exclude 'example' --exclude '.git' --exclude 'assets' --exclude 'theme' --exclude 'ingest' -zcf $HOME/Google\ Drive/Workspace/$d.tar.gz $d; done;
+30 12,15,17 * * * cd $HOME/workspace && for d in * ; do tar $GIT_BACKUPS_EXCLUDES -zcf "$HOME/$GIT_BACKUPS_DESTINATION/$d.tar.gz" $d; done;

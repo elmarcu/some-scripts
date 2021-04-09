@@ -91,6 +91,7 @@ sudo systemctl disable ondemand.service
 sudo systemctl reload cpufrequtils.service
 
 #crontab
+(crontab -u $USER -l; cat $HOME/workspace/private/bash_env_vars ) | crontab -u $USER -
 (crontab -u $USER -l; cat $HOME/workspace/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
 #desktop executables, aliases and configs
