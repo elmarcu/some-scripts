@@ -18,6 +18,8 @@ discoverable on
 pairable on
 scan on
 
+######
+
 #PS3 controller bluetooth (older install)
 #sixpair
 
@@ -29,24 +31,24 @@ cd sixad-master/
 make
 sudo make install
 
-#(enable bluetooth and plugin joystick usb)
+#enable bluetooth and plugin joystick usb
 sudo sixpair
 
 sudo hciconfig hci0
-#si esta down
+#if down, lift it
 sudo hciconfig hci0 up
 
-#en caso de que este blockeado
+#in case it is blocked
 rfkill list
 rfkill unblock bluetooth
 
 sudo hciconfig hci0 up
 
-#pair ps3 controller trougth usb
+#pair ps3 controller through usb
 sudo sixpair
 
-#listen to ps3 controller trougth bluetooth
+#listen to ps3 controller through Bluetooth
 sudo sixad -s
 
-#revierte control del bluetooth
+#revert Bluetooth control
 sudo sixad -r
