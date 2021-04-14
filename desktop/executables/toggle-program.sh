@@ -18,12 +18,6 @@ done
 if [ "$found" = true ] ; then
 
   if [ "$stopped" = true ] ; then
-    sh $HOME/.executables/throttling-cpu.sh gamer
-  else
-    sh $HOME/.executables/throttling-cpu.sh
-  fi
-
-  if [ "$stopped" = true ] ; then
     echo "Programs changing to running"
     ps aux | grep $program | grep $binary | awk '{print $2}' | xargs kill -CONT
   else
