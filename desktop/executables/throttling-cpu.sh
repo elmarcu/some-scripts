@@ -1,34 +1,26 @@
 #! /bin/sh
 #
 
-MAX_SPEED=1.5GHz
 MIN_SPEED=600MHz
-TOP_SPEED=2.5GHz
+MAX_SPEED=1.5GHz
 GOVERNOR=ondemand
-DEFAULT_GAMER_MIN_SPEED=600MHz
-DEFAULT_GAMER_MAX_SPEED=800MHz
-DEFAULT_GAMER_GOVERNOR=powersave
+TOP_SPEED=2.5GHz
+TOP_GOVERNOR=performance
 
-GAMER_MIN_SPEED=$2
-if [ -z $GAMER_MIN_SPEED ] ; then
-  GAMER_MIN_SPEED=$DEFAULT_GAMER_MIN_SPEED
+if [ ! -z $2 ] ; then
+  MIN_SPEED=$2
 fi
 
-GAMER_MAX_SPEED=$3
-if [ -z $GAMER_MAX_SPEED ] ; then
-  GAMER_MAX_SPEED=$DEFAULT_GAMER_MAX_SPEED
+if [ ! -z $3 ] ; then
+  MAX_SPEED=$3
 fi
 
 case "$1" in
-  max)
+  max|top)
     MAX_SPEED=$TOP_SPEED
+    GOVERNOR=$TOP_GOVERNOR
   ;;
-  gamer|game|custom)
-    MAX_SPEED=$GAMER_MAX_SPEED
-    MIN_SPEED=$GAMER_MIN_SPEED
-    GOVERNOR=$DEFAULT_GAMER_GOVERNOR
-  ;;
-  powersave|performance)
+  powersave|performance|ondemand)
     GOVERNOR=$1
   ;;
 esac
