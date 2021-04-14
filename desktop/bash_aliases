@@ -50,6 +50,7 @@ alias tmk='tmux kill-session -t'
 ##SYS
 alias upd='sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean"'
 alias cpu=$HOME/.executables/throttling-cpu.sh
+alias gamer=$HOME/.executables/toggle-gamer.sh
 alias program=$HOME/.executables/toggle-program.sh
 alias lights=$HOME/.executables/toggle-lights.sh
 alias sys=$HOME/.executables/sys-watcher.sh
