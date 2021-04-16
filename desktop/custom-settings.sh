@@ -8,14 +8,13 @@ echo $USER' ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
 #installs
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ACCAF35C
-echo 'deb http://apt.insync.io/ubuntu focal non-free contrib' | sudo tee /etc/apt/sources.list.d/insync.list
 sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -iy google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
 sudo apt-key add openvpn-repo-pkg-key.pub
 sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
-sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted libreoffice rename gnome-shell-extensions gnome-tweaks insync bluez-tools -y
+sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted libreoffice rename gnome-shell-extensions gnome-tweaks bluez-tools -y
 sudo snap install fast postman gimp ffmpeg vlc robo3t-snap subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
 sudo snap install mysql-workbench-community --candidate
@@ -33,11 +32,6 @@ rm purevpn_1.2.5_amd64.deb
 
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
-
-#insync
-insync-headless start
-google-chrome https://insynchq.com/auth > KEY
-insync-headless account add -c gd -a [KEY]
 
 #atom packages
 apm install language-nginx language-docker language-vue
