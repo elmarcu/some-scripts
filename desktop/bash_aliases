@@ -41,7 +41,7 @@ alias kbl="kubectl logs -f -n $KUBE_NAMESPACE"
 alias kbe="kubectl exec -it -n $KUBE_NAMESPACE"
 
 ##tmux
-alias tm='tmux'
+alias tm='tmux new-session "bash -i"'
 alias tmat='tmux at'
 alias tml='tmux list-sessions'
 alias tmatt='tmux attach-session -t'
