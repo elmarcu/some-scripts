@@ -1,5 +1,4 @@
-#! /bin/sh
-#
+#!/bin/sh
 stopped=false
 found=false
 program=$1

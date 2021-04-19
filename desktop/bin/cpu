@@ -1,6 +1,4 @@
 #! /bin/sh
-#
-
 MIN_SPEED=600MHz
 MAX_SPEED=1.5GHz
 GOVERNOR=ondemand

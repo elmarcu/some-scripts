@@ -100,7 +100,7 @@ sudo systemctl reload cpufrequtils.service
 sed 's,'\$"$(grep "WORKSPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "WORKSPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g; s,'\$"$(grep "KUBE_NAMESPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "KUBE_NAMESPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g;' $WORKSPACE/some-scripts/desktop/bash_aliases > $HOME/.bash_aliases
 
 #desktop executables and configs
-cp -r $WORKSPACE/some-scripts/desktop/executables $HOME/.executables
+sudo cp $WORKSPACE/some-scripts/desktop/bin/* /usr/bin/
 cp $WORKSPACE/some-scripts/desktop/pam_environment $HOME/.pam_environment
 cp $WORKSPACE/some-scripts/desktop/sshconfig $HOME/.ssh/config
 cp $WORKSPACE/private/profile.jpg $HOME/.face
@@ -151,7 +151,7 @@ dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/cus
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
 
 #lights- darkmode
-sh $HOME/.executables/toggle-lights.sh
+lights
 
 #secrets-backup
 cd $HOME/.ssh/ && tar cz access-* | openssl enc -aes-256-cbc -pbkdf2 -e > $HOME/.ssh/passwd.tar.gz.enc && rm access-*
