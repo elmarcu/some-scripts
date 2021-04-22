@@ -65,17 +65,18 @@ export WORKSPACE=$(echo $HOME)/workspace
 mkdir $WORKSPACE
 cd $WORKSPACE
 
+#githubs repos
+git clone git@github.com:elmarcu/some-scripts.git
+git clone git@github.com:elmarcu/private.git
+
 #bash_personal_envs
 while read p; do
   export "$p"
   echo "export $p" >> $HOME/.bashrc
 done < $WORKSPACE/private/bash_env_vars
 
-#githubs
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
-git clone git@github.com:elmarcu/some-scripts.git
-git clone git@github.com:elmarcu/private.git
 
 #ssh keys, isntead of creating new sshkey-gen, use these
 cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $WORKSPACE/private/codes.tar.gz.enc | tar xz
