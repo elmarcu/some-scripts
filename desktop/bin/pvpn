@@ -8,8 +8,7 @@ case "$1" in
     exit 0
   ;;
   stop)
-    if [ "$SESSIONEXISTS" != "" ]
-    then
+    if [ "$SESSIONEXISTS" != "" ]; then
       tmux kill-session -t $SESSION
     fi
     purevpn -d
@@ -17,8 +16,7 @@ case "$1" in
   ;;
   US|BR|CA)
     sudo systemctl start purevpn
-    if [ "$SESSIONEXISTS" = "" ]
-    then
+    if [ "$SESSIONEXISTS" = "" ]; then
       tmux new-session -d -s $SESSION "purevpn -c $1 && watch purevpn -s"
     fi
     tmux attach-session -t $SESSION:0

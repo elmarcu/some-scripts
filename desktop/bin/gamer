@@ -2,9 +2,9 @@
 SESSION="gamer"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
-DEFAULT_GAMER_MIN_SPEED=600MHz
-DEFAULT_GAMER_MAX_SPEED=800MHz
-DEFAULT_GAMER_GOVERNOR=powersave
+GAMER_MIN_SPEED=600MHz
+GAMER_MAX_SPEED=800MHz
+GAMER_GOVERNOR=powersave
 
 case "$1" in
   help)
@@ -12,21 +12,30 @@ case "$1" in
     exit 0
   ;;
   stop)
-    if [ "$SESSIONEXISTS" != "" ]
-    then
+    if [ "$SESSIONEXISTS" != "" ]; then
       tmux kill-session -t $SESSION
     fi
     cpu
   ;;
   *)
-    if [ "$SESSIONEXISTS" = "" ]
-    then
+    if [ "$SESSIONEXISTS" = "" ]; then
+
+      if [ "$1" = "custom" ]; then
+        if [ ! -z $2 ]; then
+          GAMER_MIN_SPEED=$2
+        fi
+
+        if [ ! -z $3 ]; then
+          GAMER_MAX_SPEED=$3
+        fi
+      fi
+
       tmux new-session -d -s $SESSION 'watch -n 5 sensors $(sensors | grep core)' \; \
         split-window -v -p 85 'htop' \; \
         split-window -v -p 25 'bash' \; \
         select-pane -t 0 \; \
         split-window -h -p 55 'watch -n 5 -c "cpufreq-info -c 0 | grep -A3 current\ policy"' \; \
-        split-window -h "watch cpu $DEFAULT_GAMER_GOVERNOR $DEFAULT_GAMER_MIN_SPEED $DEFAULT_GAMER_MAX_SPEED" \; \
+        split-window -h "watch cpu $GAMER_GOVERNOR $GAMER_MIN_SPEED $GAMER_MAX_SPEED" \; \
         select-pane -t 4 \;
     fi
     tmux attach-session -t $SESSION:0

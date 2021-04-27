@@ -3,20 +3,20 @@ stopped=false
 found=false
 program=$1
 binary=$2
-if [ -z $binary ] ; then
+if [ -z $binary ]; then
   binary="exe"
 fi
 
 for i in $(ps aux | grep $program | grep $binary | awk '{print $8}'); do
   found=true
-  if [ "TNl" = "$i" ] || [ "Tsl" = "$i" ] || [ "Tl" = "$i" ] || [ "Tl+" = "$i" ] ; then
+  if [ "TNl" = "$i" ] || [ "Tsl" = "$i" ] || [ "Tl" = "$i" ] || [ "Tl+" = "$i" ]; then
     stopped=true
   fi
 done
 
-if [ "$found" = true ] ; then
+if [ "$found" = true ]; then
 
-  if [ "$stopped" = true ] ; then
+  if [ "$stopped" = true ]; then
     echo "Programs changing to running"
     ps aux | grep $program | grep $binary | awk '{print $2}' | xargs kill -CONT
   else

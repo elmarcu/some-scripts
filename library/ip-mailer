@@ -10,7 +10,7 @@ rf=$(mktemp)
 
 wget http://checkip.dyndns.org/ -O - -o /dev/null | cut -d: -f 2 | cut -d\< -f 1 > $rf 2>&1
 
-if [ "$alert_cc" != "" ] ; then
+if [ "$alert_cc" != "" ]; then
         cc=" -c $alert_cc "
 
 cat <<EOF | mail -s -u $USER "$alert_subject" $alert_to $cc
