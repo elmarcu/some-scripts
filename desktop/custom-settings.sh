@@ -34,7 +34,7 @@ rm purevpn_1.2.5_amd64.deb
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
 
 #atom packages
-apm install language-nginx language-docker language-vue
+apm install language-nginx language-docker language-vue sort-lines
 # apm install language-brightscript roku-develop
 
 #docker compose
