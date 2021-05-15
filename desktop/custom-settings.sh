@@ -61,7 +61,7 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.selected_editor
 
 #workspace
-export WORKSPACE=$(echo $HOME)/workspace
+export WORKSPACE=$(echo $HOME)/workspace/$(echo $USER)
 mkdir $WORKSPACE
 cd $WORKSPACE
 
