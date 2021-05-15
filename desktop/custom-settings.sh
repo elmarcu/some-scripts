@@ -61,9 +61,9 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.selected_editor
 
 #workspace
-export WORKSPACE=$(echo $HOME)/workspace/$(echo $USER)
-mkdir $WORKSPACE
-cd $WORKSPACE
+export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
+mkdir $WORKSPACE_PRIVATE
+cd $WORKSPACE_PRIVATE
 
 #githubs repos
 git clone git@github.com:elmarcu/some-scripts.git
@@ -73,13 +73,13 @@ git clone git@github.com:elmarcu/private.git
 while read p; do
   export "$p"
   echo "export $p" >> $HOME/.bashrc
-done < $WORKSPACE/private/bash_env_vars
+done < $WORKSPACE_PRIVATE/private/bash_env_vars
 
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
 
 #ssh keys, isntead of creating new sshkey-gen, use these
-cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $WORKSPACE/private/codes.tar.gz.enc | tar xz
+cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $WORKSPACE_PRIVATE/private/codes.tar.gz.enc | tar xz
 #secrets
 cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in passwd.tar.gz.enc | tar xz
 
@@ -94,19 +94,19 @@ sudo systemctl disable ondemand.service
 sudo systemctl reload cpufrequtils.service
 
 #crontab
-(crontab -u $USER -l; cat $WORKSPACE/private/bash_env_vars ) | crontab -u $USER -
-(crontab -u $USER -l; cat $WORKSPACE/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
+(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/private/bash_env_vars ) | crontab -u $USER -
+(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
 #aliases
-sed 's,'\$"$(grep "WORKSPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "WORKSPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g; s,'\$"$(grep "KUBE_NAMESPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "KUBE_NAMESPACE" $WORKSPACE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g;' $WORKSPACE/some-scripts/desktop/bash_aliases > $HOME/.bash_aliases
+sed 's,'\$"$(grep "WORKSPACE_PRIVATE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "WORKSPACE_PRIVATE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g; s,'\$"$(grep "KUBE_NAMESPACE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "KUBE_NAMESPACE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g;' $WORKSPACE_PRIVATE/some-scripts/desktop/bash_aliases > $HOME/.bash_aliases
 
 #desktop executables and configs
-sudo cp $WORKSPACE/some-scripts/desktop/bin/* /usr/bin/
-cp $WORKSPACE/some-scripts/desktop/pam_environment $HOME/.pam_environment
-cp $WORKSPACE/some-scripts/desktop/sshconfig $HOME/.ssh/config
-cp $WORKSPACE/private/profile.jpg $HOME/.face
-sudo cp $WORKSPACE/private/profile.jpg /var/lib/AccountsService/icons/$USER
-cp $WORKSPACE/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
+sudo cp $WORKSPACE_PRIVATE/some-scripts/desktop/bin/* /usr/bin/
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/pam_environment $HOME/.pam_environment
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/sshconfig $HOME/.ssh/config
+cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
+sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
+cp $WORKSPACE_PRIVATE/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
 gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/.wallpaper.jpg'"
 gsettings set org.gnome.desktop.screensaver picture-uri "'file://$HOME/.wallpaper.jpg'"
 
@@ -156,6 +156,6 @@ lights
 
 #secrets-backup
 cd $HOME/.ssh/ && tar cz access-* | openssl enc -aes-256-cbc -pbkdf2 -e > $HOME/.ssh/passwd.tar.gz.enc && rm access-*
-cd $HOME/.ssh/ && tar cz --exclude config * | openssl enc -aes-256-cbc -pbkdf2 -e > $WORKSPACE/private/codes.tar.gz.enc
+cd $HOME/.ssh/ && tar cz --exclude config * | openssl enc -aes-256-cbc -pbkdf2 -e > $WORKSPACE_PRIVATE/private/codes.tar.gz.enc
 
 sudo service gdm3 restart
