@@ -178,6 +178,9 @@ systemctl stop thermald && systemctl disable thermald
 #list files order by last modified date
 ls -thal /tmp/
 
+#update modified date access
+touch -t [YYYY]MMDDhhmm[.ss] *
+
 #list files permissions
 ls -la /tmp/
 stat -c '%a - %A - %n' ./*
