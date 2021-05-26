@@ -34,6 +34,9 @@ convert -density 256x256 -background transparent favicon.svg -define icon:auto-r
 #ebook to pdf [calibre package]
 ebook-convert "book.epub" "book.mobi"
 ebook-convert "book.azw3" "book.pdf"
+
+
+
 --
 
 #iso disk cd/dvd
@@ -99,11 +102,11 @@ ffmpeg -i FILE 2>&1 | grep Video
 ffmpeg -i FILE 2>&1 | grep Duration
 
 #video to gif
-
 ffmpeg -y -ss 2 -t 3 -i VID.MP4 -vf fps=10,scale=320:-1:flags=lanczos,palettegen palette.png
-
 ffmpeg -ss 9 -t 3 -i VID.MP4 -i palette.png -filter_complex "fps=10,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif
 
+#video to gif simple
+ffmpeg -i input.webm -pix_fmt rgb24 output.gif
 
 #change cover on mp3files
 
