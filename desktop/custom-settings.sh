@@ -14,16 +14,10 @@ sudo dpkg -iy google-chrome-stable_current_amd64.deb && rm google-chrome-stable_
 sudo apt-key add openvpn-repo-pkg-key.pub
 sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
-sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted libreoffice rename gnome-shell-extensions gnome-tweaks bluez-tools -y
-sudo snap install fast postman gimp ffmpeg vlc robo3t-snap subliminal-subtitles
+sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted firefox rename gnome-shell-extensions gnome-tweaks bluez-tools -y
+sudo snap install fast gimp ffmpeg vlc subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
-sudo snap install mysql-workbench-community --candidate
 sudo snap install atom --classic
-
-#teamviewer
-wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo dpkg -iy teamviewer_amd64.deb && rm teamviewer_amd64.deb
-sudo apt install -fy
 
 #purevpn
 wget https://d3uym7n1flvv1x.cloudfront.net/linux/app/purevpn_1.2.5_amd64.deb
@@ -45,7 +39,7 @@ sudo gpasswd -a $USER docker
 
 #purges & cleaning
 rm /tmp/*.deb
-sudo apt purge '^firefox*' '^thunderbird*' gnome-shell-extension-ubuntu-dock -y
+sudo apt purge '^thunderbird*' 'libreoffice*' gnome-shell-extension-ubuntu-dock -y
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y && apt autoremove -y && apt autoclean && apt clean"
 
 #bash
