@@ -19,11 +19,6 @@ sudo snap install fast gimp ffmpeg vlc subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
 sudo snap install atom --classic
 
-#purevpn
-wget https://d3uym7n1flvv1x.cloudfront.net/linux/app/purevpn_1.2.5_amd64.deb
-sudo dpkg -i purevpn_1.2.5_amd64.deb
-rm purevpn_1.2.5_amd64.deb
-
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
 
