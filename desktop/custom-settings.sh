@@ -29,6 +29,9 @@ sudo snap install code --classic
 code --install-extension raynigon.nginx-formatter ms-azuretools.vscode-docker ms-python.python ms-vscode-remote.remote-containers
 cp $WORKSPACE_PRIVATE/some-scripts/desktop/vscode-settings.json $HOME/.config/Code/User/settings.json
 
+#mongo
+sudo snap install robo3t-snap
+
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
 
