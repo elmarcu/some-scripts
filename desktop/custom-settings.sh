@@ -17,14 +17,10 @@ sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
 sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted firefox rename gnome-shell-extensions gnome-tweaks bluez-tools -y
 sudo snap install fast gimp ffmpeg vlc subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
-sudo snap install atom --classic
+sudo snap install code --classic
 
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
-
-#atom packages
-apm install language-nginx language-docker language-vue sort-lines
-# apm install language-brightscript roku-develop
 
 #docker compose
 sudo curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -110,7 +106,7 @@ gsettings set org.gnome.desktop.datetime automatic-timezone true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.interface locate-pointer false
 gsettings set org.gnome.mutter dynamic-workspaces true
-gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'atom_atom.desktop']"
+gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'code_code.desktop']"
 #tweaks
 gsettings set org.gnome.shell enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.github.com']"
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
