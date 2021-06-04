@@ -17,7 +17,17 @@ sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
 sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan ubuntu-restricted-extras deluge gparted firefox rename gnome-shell-extensions gnome-tweaks bluez-tools -y
 sudo snap install fast gimp ffmpeg vlc subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
+
+#atom
+sudo snap install atom --classic
+apm install language-nginx language-docker language-vue sort-lines
+# apm install language-brightscript roku-develop
+
+#vscode
 sudo snap install code --classic
+#code --list-extensions
+code --install-extension raynigon.nginx-formatter ms-azuretools.vscode-docker ms-python.python ms-vscode-remote.remote-containers
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/vscode-settings.json $HOME/.config/Code/User/settings.json
 
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent

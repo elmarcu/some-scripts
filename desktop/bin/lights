@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 profile=$(gsettings get org.gnome.Terminal.ProfilesList default | tr "'" " " | awk '{print $1}')
 switch=dark
 from=light
@@ -23,4 +23,13 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ foreground-color $terminal_dark
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile/ palette "$palette"
 gsettings set org.gnome.gedit.preferences.editor scheme "$gedit_scheme"
-sed -i "s/$from/$switch/" $HOME/.atom/config.cson
+
+if test -f $HOME/.atom/config.cson; then
+  sed -i "s/$from/$switch/" $HOME/.atom/config.cson
+fi
+
+if test -f $HOME/.config/Code/User/settings.json; then
+  from="${from^}"
+  switch="${switch^}"
+  sed -i "s/$from/$switch/" $HOME/.config/Code/User/settings.json
+fi
