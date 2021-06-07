@@ -75,7 +75,7 @@ ip route del 10.199.1.65 via 0.0.0.0 dev tun0
 route del -net 0.0.0.0 netmask 0.0.0.0 gw 10.199.1.65 tun0
 
 #openvpn2
-openvpn --config /home/USER/USER.tblk/USER.ovpn
+openvpn --config /home/USER/USER.tblk/USER.ovpn [--redirect-gateway]
 
 #openvpn3 load config
 openvpn3 config-import --config [FILE].ovpn --name [NAME] --persistent

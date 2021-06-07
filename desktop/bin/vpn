@@ -4,7 +4,7 @@ SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 case "$1" in
   help)
-    echo "[empty] will start vpn aws and qts\n[stop] - stops all vpn"
+    echo "[empty] will start vpn aws and qts\n[redirect] qts vpn with gateway redirection (full VPN)\n[stop] stops all vpn"
     exit 0
   ;;
   stop)
@@ -20,8 +20,12 @@ case "$1" in
   ;;
   *)
     if [ "$SESSIONEXISTS" = "" ]; then
-      tmux new-session -d -s $SESSION 'sudo sh -c "openvpn --config $HOME/.ssh/qts.ovpn"' \; \
-        split-window -v 'sudo sh -c "openvpn3 session-start --config AWS && watch openvpn3 sessions-list"' \;
+      if [ "$1" = "redirect" ]; then
+        tmux new-session -d -s $SESSION 'sudo sh -c "openvpn --recirect-gateway --config $HOME/.ssh/qts.ovpn"'
+      else
+        tmux new-session -d -s $SESSION 'sudo sh -c "openvpn --config $HOME/.ssh/qts.ovpn"' \; \
+          split-window -v 'sudo sh -c "openvpn3 session-start --config AWS && watch openvpn3 sessions-list"' \;
+      fi
     fi
     tmux attach-session -t $SESSION:0
   ;;
