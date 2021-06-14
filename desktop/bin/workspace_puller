@@ -1,0 +1,12 @@
+#!/bin/bash
+cd $WORKSPACE
+for d in * ; do
+  cd $WORKSPACE/$d
+  for sd in * ; do
+    cd $WORKSPACE/$d/$sd
+    if [ "* master" == "$(git branch)" ]; then
+        echo "updating $sd"
+        git pull
+    fi
+  done;
+done;
