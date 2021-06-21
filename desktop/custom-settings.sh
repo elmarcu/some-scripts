@@ -18,6 +18,10 @@ sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vi
 sudo snap install fast gimp ffmpeg vlc subliminal-subtitles
 sudo snap connect subliminal-subtitles:removable-media core
 
+#sublime
+sudo snap install sublime-text --classic --edge
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/sublime-settings.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+
 #atom
 sudo snap install atom --classic
 apm install language-nginx language-docker language-vue sort-lines
@@ -119,7 +123,7 @@ gsettings set org.gnome.desktop.datetime automatic-timezone true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.interface locate-pointer false
 gsettings set org.gnome.mutter dynamic-workspaces true
-gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'code_code.desktop']"
+gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop']"
 #tweaks
 gsettings set org.gnome.shell enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.github.com']"
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
