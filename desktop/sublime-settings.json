@@ -4,6 +4,7 @@
 	"tab_size": 2,
 	"remember_full_screen": true,
 	"remember_workspace": false,
+	"word_wrap": true,
 	"theme": "auto",
 	"color_scheme": "auto",
 	"dark_color_scheme": "Packages/Color Scheme - Default/Mariana.sublime-color-scheme",
