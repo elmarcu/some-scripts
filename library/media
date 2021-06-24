@@ -144,12 +144,12 @@ ffmpeg -i test.mp4 -vf scale=640:480,fps=1/60 img%03d.jpg
 
 
 #video reduce quality
-
 ffmpeg -i INPUT.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus output.webm
 ffmpeg -i INPUT.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus -strict -2 output.mp4
-
 ffmpeg -b 901 -i INPUT.mp4 OUTPUT.mp4
 
+#whatsapp compatible
+ffmpeg -i broken.mp4 -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p working.mp4
 --
 
 #get frame
