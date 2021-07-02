@@ -26,6 +26,7 @@ cp $WORKSPACE_PRIVATE/some-scripts/desktop/sublime-settings.json $HOME/.config/s
 sudo snap install atom --classic
 apm install language-nginx language-docker language-vue sort-lines
 # apm install language-brightscript roku-develop
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/atom-settings.cson $HOME/.atom/config.cson
 
 #vscode
 sudo snap install code --classic
