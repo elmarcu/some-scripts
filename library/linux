@@ -169,6 +169,9 @@ while [ 1 ]; do sensors > $HOME/Downloads/sensors-"$(date +%d-%H:%M:%S)".log; ec
 
 #thermald service que manipula el cpu usage para mantener low temperature
 systemctl stop thermald && systemctl disable thermald
+
+#reload speakers
+pulseaudio -k && sudo alsa force-reload
 --
 
 #history cmd search
