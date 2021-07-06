@@ -89,9 +89,9 @@ dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
 --
 
 #live usb creators
-usb-creator-gtk
-unetbootin
-WoeUSB
+usb-creator-gtk #ubuntu
+unetbootin #any
+WoeUSB #win
 --
 
 #notifications after job finish
