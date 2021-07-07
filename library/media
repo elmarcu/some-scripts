@@ -1,8 +1,10 @@
-#pdf compress
+#pdf compress / scale image
 
-gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -sOutputFile=output.pdf input.pdf
+ghostscript -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -sOutputFile=output.pdf input.pdf
 
-gs -q -dNOPAUSE -dBATCH -dSAFER -dPDFA=2 -dPDFACompatibilityPolicy=1 -dSimulateOverprint=true -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dAutoRotatePages=/None -dColorImageDownsampleType=/Bicubic -dColorImageResolution=300 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=300 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=300 -sOutputFile=output.pdf input.pdf
+ghostscript -dNOPAUSE -dBATCH -dSAFER -dPDFA=2 -dPDFACompatibilityPolicy=1 -dSimulateOverprint=true -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dAutoRotatePages=/None -dColorImageDownsampleType=/Bicubic -dColorImageResolution=300 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=300 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=300 -sOutputFile=output.pdf input.pdf
+
+ghostscript -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFACompatibilityPolicy=1 -dSimulateOverprint=true -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dEmbedAllFonts=true -dSubsetFonts=true -dAutoRotatePages=/None -dColorImageDownsampleType=/Bicubic -dColorImageResolution=150 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=300 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=300 -sOutputFile=output.pdf input.pdf
 
 #to blacknwhite
 ghostscript \
@@ -16,9 +18,6 @@ ghostscript \
   [INPUT.PDF]
 
 #scaling pdf
-gs -o output.pdf -sDEVICE=pdfwrite -dPDFFitPage -r300x300 -g2550x3300 input.pdf
-r is for resolution in dots per inch (in horizontal and in vertical direction). g is for page dimensions in pixels (in horizontal and in vertical direction)
-
 convert original.pdf -density "300" -resize "2550x3300" resized.pdf
 
 #pdf to jpg
@@ -34,10 +33,8 @@ convert -density 256x256 -background transparent favicon.svg -define icon:auto-r
 #ebook to pdf [calibre package]
 ebook-convert "book.epub" "book.mobi"
 ebook-convert "book.azw3" "book.pdf"
+------------
 
-
-
---
 
 #iso disk cd/dvd
 
@@ -58,7 +55,7 @@ sudo dd if=/dev/sdx of=/path/to/new.iso
 ------------
 
 
-achica las imagenes a la mitad por heigh y width >
+#image reducer por heigh y width >
 
 gimp -i -b '(gimp-image-resize "*.jpg" width height x-offset y-offset)' -b '(gimp-quit 0)' (no funca)
 convert '*.jpg[300x>]' *.jpg | convierte todo lo q sea mayor a 300px
