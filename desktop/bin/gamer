@@ -8,7 +8,7 @@ GAMER_GOVERNOR=powersave
 
 case "$1" in
   help)
-    echo "[empty] will change cpu throttle to gamer settings\n[stop] restores cpu throttle"
+    echo "[empty] will change cpu throttle to gamer settings\n[custom min max] will change cpu throttle to custom settings to min max user params\n[stop] restores cpu throttle"
     exit 0
   ;;
   stop)
