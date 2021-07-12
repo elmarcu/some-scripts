@@ -5,6 +5,8 @@
       "one-light-ui"
       "one-light-syntax"
     ]
+  editor:
+    softWrap: true
   "exception-reporting":
     userId: "61d35ace-fd24-48e3-9d82-7de6486c8e6b"
   welcome:
