@@ -1,0 +1,17 @@
+#enter client
+psql -U [USER] [DATABASE]
+
+#help
+\?
+
+#databases
+\l
+
+#change connections/database
+\c {[DATABASE|- USER|- HOST|- PORT|-] | conninfo}
+
+#list tables
+\z
+
+#List of relations
+\dS
