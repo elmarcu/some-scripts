@@ -35,7 +35,8 @@ code --install-extension raynigon.nginx-formatter ms-azuretools.vscode-docker ms
 cp $WORKSPACE_PRIVATE/some-scripts/desktop/vscode-settings.json $HOME/.config/Code/User/settings.json
 
 #mongo
-sudo snap install robo3t-snap
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
+sudo dpkg -i mongodb-compass_1.26.1_amd64.deb && rm mongodb-compass_1.26.1_amd64.deb
 
 #vpns
 sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
