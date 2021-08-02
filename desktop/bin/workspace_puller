@@ -6,7 +6,7 @@ for d in * ; do
     cd $WORKSPACE/$d/$sd
     if [ "* master" == "$(git branch)" ]; then
         echo "updating $sd"
-        git pull
+        git remote prune origin && git pull
     fi
   done;
 done;
