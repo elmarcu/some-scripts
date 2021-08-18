@@ -20,19 +20,19 @@ sudo snap connect subliminal-subtitles:removable-media core
 
 #sublime
 sudo snap install sublime-text --classic --edge
-cp $WORKSPACE_PRIVATE/some-scripts/desktop/sublime-settings.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/settings-ide-sublime.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
 #atom
 sudo snap install atom --classic
 apm install language-nginx language-docker language-vue sort-lines
 # apm install language-brightscript roku-develop
-cp $WORKSPACE_PRIVATE/some-scripts/desktop/atom-settings.cson $HOME/.atom/config.cson
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/settings-ide-atom.cson $HOME/.atom/config.cson
 
 #vscode
 sudo snap install code --classic
 #code --list-extensions
 code --install-extension raynigon.nginx-formatter ms-azuretools.vscode-docker ms-python.python ms-vscode-remote.remote-containers
-cp $WORKSPACE_PRIVATE/some-scripts/desktop/vscode-settings.json $HOME/.config/Code/User/settings.json
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/settings-ide-vscode.json $HOME/.config/Code/User/settings.json
 
 #mongo
 wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
