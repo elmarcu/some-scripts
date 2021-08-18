@@ -1,1 +1,2 @@
 30 12,15,17 * * * /usr/bin/workspace_backups
+@weekly docker system prune --volumes -f && docker image prune -a -f
