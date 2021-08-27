@@ -8,7 +8,7 @@ GAMER_GOVERNOR=powersave
 
 case "$1" in
   help)
-    echo "[empty] will change cpu throttle to gamer settings\n[custom min max] will change cpu throttle to custom settings to min max user params\n[stop] restores cpu throttle"
+    echo "[empty] will change cpu throttle to gamer settings\n[custom min max] will change cpu throttle to custom settings to min max user params\n[top]will run cpu at top capacities\n[stop] restores cpu throttle"
     exit 0
   ;;
   stop)
@@ -19,6 +19,11 @@ case "$1" in
   ;;
   *)
     if [ "$SESSIONEXISTS" = "" ]; then
+      if [ "$1" = "top" ]; then
+        GAMER_GOVERNOR=top
+        GAMER_MAX_SPEED=""
+        GAMER_MIN_SPEED=""
+      fi
 
       if [ "$1" = "custom" ]; then
         if [ ! -z $2 ]; then
