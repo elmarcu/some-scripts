@@ -3,6 +3,6 @@ cd $WORKSPACE
 for d in * ; do
   cd $WORKSPACE/$d
   for sd in * ; do
-    tar $GIT_BACKUPS_EXCLUDES -zcf "$HOME/$GIT_BACKUPS_DESTINATION/$d/$sd.tar.gz" $sd;
+    tar $GIT_BACKUPS_EXCLUDES -zcf "$GIT_BACKUPS_DESTINATION/$d/$sd.tar.gz" $sd;
   done;
 done;
