@@ -8,10 +8,20 @@ psql -U [USER] [DATABASE]
 \l
 
 #change connections/database
-\c {[DATABASE|- USER|- HOST|- PORT|-] | conninfo}
+\c {[DATABASE|- USER|- HOST|- PORT|-] | connection_info}
 
 #list tables
 \z
 
+#List tables under schema
+\dt *.*
+
 #List of relations
 \dS
+
+\dt [SCHEMA_NAME].
+
+#query
+\x
+TABLE [schema.table_name];
+SELECT * FROM [schema.table_name];
