@@ -28,4 +28,4 @@ sudo umount /Volumes/DISK
 
 sudo apt-get install cifs-utils
 sudo mkdir /mnt/local_share
-sudo mount -t cifs -o user=[USER] //[IP_NETWORK]/[PATH]/ /mnt/local_share/
+sudo mount -t cifs -o user=[USER],vers=3.0 //[IP_NETWORK]/[PATH]/ /mnt/local_share/
