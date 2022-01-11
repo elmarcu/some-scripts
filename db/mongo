@@ -97,3 +97,6 @@ db.collection.find( { _id: 5 } )
 
 #sorting last records
 db.foo.find().sort({_id:-1});
+
+#find contains string
+db.foo.findOne({"username" : {$regex : "son"}});
