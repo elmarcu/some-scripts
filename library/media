@@ -22,10 +22,14 @@ convert original.pdf -density "300" -resize "2550x3300" resized.pdf
 
 #pdf to jpg
 convert -density 300 file.pdf page_%04d.jpg
+convert -density 300 -trim file.pdf -quality 100 page_%04d.jpg
 convert -density 300 -background white -alpha remove file.pdf page_%04d.jpg
 
 #jpg to pdf
 convert *.jpg pictures.pdf
+
+#add text to pdf
+convert input.pdf -fill black -undercolor white -pointsize 40 -gravity South -annotate +0+5 ' text ' output.pdf
 
 #svg to jpg
 convert -density 256x256 -background transparent favicon.svg -define icon:auto-resize -colors 256 favicon.ico
