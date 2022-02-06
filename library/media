@@ -176,13 +176,14 @@ ssconvert FILE.xls FILE.csv
 
 --
 
+#concat mp4
+ffmpeg -i concat:"input1.mp4|input2.mp4" output.mp4
+melt {input-sequence} -consumer avformat:{output-name} acodec=libmp3lame vcodec=libx264
+
 #Joining *.avi.001, *.avi.002 etc video files
-sudo apt install p7zip-full
-#And then give it the name of the first file:
 7z x myvideo.avi.001
 
 #For joining individual video files, there's mencoder, which works with wildcards.
-sudo apt install mencoder
 mencoder -ovc copy -oac copy -forceidx -o allvids.avi vid*.avi
 
 #If you want to join WMV files, there's asfbin
