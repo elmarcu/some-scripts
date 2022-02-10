@@ -24,6 +24,10 @@ git log staging ^origin/staging --no-merges
 #git log author
 git log --author='\(Adam\)\|\(Jon\)'
 
+#create tags [on a commit]
+git tag -a [VERSION] [COMMIT] -m "[COMMIT_MSG]"
+git push origin [VERSION]
+
 #Delete ALL local tags.
 git tag -l | xargs git tag -d
 
