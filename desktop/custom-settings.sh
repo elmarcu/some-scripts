@@ -69,7 +69,9 @@ export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
 mkdir $WORKSPACE_PRIVATE
 cd $WORKSPACE_PRIVATE
 
-#githubs repos
+#githubs repo
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa-githubs
 git clone git@github.com:elmarcu/some-scripts.git
 git clone git@github.com:elmarcu/private.git
 
