@@ -71,7 +71,7 @@ cd $WORKSPACE_PRIVATE
 
 #githubs repo
 eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa-githubs
+ssh-add ~/.ssh/id_rsa-github
 git clone git@github.com:elmarcu/some-scripts.git
 git clone git@github.com:elmarcu/private.git
 
