@@ -15,7 +15,7 @@ sudo apt-key add openvpn-repo-pkg-key.pub
 sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
 sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan gthumb ubuntu-restricted-extras deluge gparted rename gnome-shell-extensions gnome-tweaks bluez-tools -y
-sudo snap install firefox fast gimp flameshot ffmpeg vlc subliminal-subtitles
+sudo snap install firefox fast gimp flameshot ffmpeg vlc subliminal-subtitles pdfmixtool
 sudo snap connect subliminal-subtitles:removable-media core
 
 #sublime
