@@ -1,5 +1,5 @@
 {
     "window.restoreFullscreen": true,
     "editor.wordWrap": "on",
-    "workbench.colorTheme": "Default Light+"
+    "window.autoDetectColorScheme": true
 }
