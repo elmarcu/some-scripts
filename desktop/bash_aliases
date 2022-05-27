@@ -33,12 +33,6 @@ alias dimgs='docker images -a'
 alias drmAll='docker system prune --volumes -f && docker image prune -a -f'
 alias dsys='tmux new "docker stats --all" ";" split -p 50 "watch docker ps -a"'
 
-##kubectl
-alias kbn="kubectl get nodes -n $KUBE_NAMESPACE"
-alias kbp="kubectl get pods -n $KUBE_NAMESPACE"
-alias kbl="kubectl logs --tail 100 -f -n $KUBE_NAMESPACE"
-alias kbe="kubectl exec -it -n $KUBE_NAMESPACE"
-
 ##tmux
 alias tm='tmux new-session "bash -i"'
 alias tmat='tmux at'

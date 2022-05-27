@@ -104,7 +104,7 @@ sudo systemctl reload cpufrequtils.service
 (crontab -u $USER -l; cat $WORKSPACE_PRIVATE/some-scripts/desktop/crontab-scripts ) | crontab -u $USER -
 
 #aliases
-sed 's,'\$"$(grep "WORKSPACE_PRIVATE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "WORKSPACE_PRIVATE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g; s,'\$"$(grep "KUBE_NAMESPACE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $1}')"','"$(grep "KUBE_NAMESPACE" $WORKSPACE_PRIVATE/private/bash_env_vars | tr '=' ' ' | awk '{print $2}')"',g;' $WORKSPACE_PRIVATE/some-scripts/desktop/bash_aliases > $HOME/.bash_aliases
+cp $WORKSPACE_PRIVATE/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
 
 #desktop executables and configs
 sudo cp $WORKSPACE_PRIVATE/some-scripts/desktop/bin/* /usr/bin/
