@@ -22,9 +22,9 @@ cpupower --cpu all frequency-set --freq 2GHz
 cpupower frequency-set --governor ondemand
 
 #other commands for cpu
+echo 'GOVERNOR="'$GOVERNOR'"
 MIN_SPEED="'$MIN_SPEED'"
 MAX_SPEED="'$MAX_SPEED'"' | sudo tee /etc/default/cpufrequtils
-sudo systemctl disable ondemand.service
 sudo systemctl reload cpufrequtils.service
 (add intel_pstate=disable to GRUB_CMDLINE_LINUX_DEFAULT on boot grub for permanent changes)
 
