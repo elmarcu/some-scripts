@@ -38,9 +38,6 @@ cp $WORKSPACE_PRIVATE/some-scripts/desktop/settings-ide-vscode.json $HOME/.confi
 wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
 sudo dpkg -i mongodb-compass_1.26.1_amd64.deb && rm mongodb-compass_1.26.1_amd64.deb
 
-#vpns
-sudo openvpn3 config-import --config $HOME/.ssh/aws.ovpn --name AWS --persistent
-
 #docker compose
 sudo curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
@@ -91,13 +88,8 @@ cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in passwd.tar.gz.enc | tar
 
 #boot options
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/' /etc/default/grub
-sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash, intel_pstate=disable"/' /etc/default/grub
+sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' /etc/default/grub
 sudo update-grub
-
-#cpu
-echo 'GOVERNOR="ondemand"' | sudo tee /etc/default/cpufrequtils
-sudo systemctl disable ondemand.service
-sudo systemctl reload cpufrequtils.service
 
 #crontab
 (crontab -u $USER -l; cat $WORKSPACE_PRIVATE/private/bash_env_vars ) | crontab -u $USER -
