@@ -4,7 +4,7 @@ for d in * ; do
   cd $WORKSPACE/$d
   for sd in * ; do
     cd $WORKSPACE/$d/$sd
-    if [ "* master" == "$(git branch)" ]; then
+    if [ "* master" == "$(git branch)" ] || [ "* main" == "$(git branch)" ]; then
         echo "updating $sd"
         git remote prune origin && git pull
     fi
