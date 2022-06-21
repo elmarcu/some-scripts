@@ -104,9 +104,6 @@ cp $WORKSPACE_PRIVATE/some-scripts/desktop/pam_environment $HOME/.pam_environmen
 cp $WORKSPACE_PRIVATE/some-scripts/desktop/sshconfig $HOME/.ssh/config
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
-cp $WORKSPACE_PRIVATE/private/wallpaper.jpg $HOME/pictures/.wallpaper.jpg
-gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/.wallpaper.jpg'"
-gsettings set org.gnome.desktop.screensaver picture-uri "'file://$HOME/.wallpaper.jpg'"
 
 #desktop settings
 dconf write /system/locale/region "'en_US.UTF-8'"
