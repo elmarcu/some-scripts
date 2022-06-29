@@ -32,6 +32,9 @@ git push origin [VERSION]
 git log --oneline
 git log --oneline $(git describe --tags --abbrev=0 @^)..@
 
+#list commits between tags
+git log --oneline [TAG2]...[TAG1]
+
 #Delete ALL local tags.
 git tag -l | xargs git tag -d
 
