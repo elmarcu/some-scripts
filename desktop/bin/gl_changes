@@ -1,0 +1,9 @@
+#!/bin/bash
+tag1=$1
+tag2=$2
+
+git log --oneline $tag1...$tag2 && echo "-------"
+
+git log --oneline $tag1...$tag2 | grep -ioP 'cms-.*(?=])' | tr '[' ' ' | tr ']' ' ' | awk '{print$1}'| tr '\n' ',' | sed 's/,$/)/' | sed 's/ //' | sed -e 's,^,https://televisaunivision.atlassian.net/issues/?jql=key%20in%20(,' && echo "" && echo "-------"
+
+git log --oneline $tag1...$tag2 | grep -vi 'cms' | grep -ioP '(\(#.*(?=\)))' | tr '[' ' ' | tr ']' ' ' | sed 's,(#,https://github.com/televisa-univision/service-editorial/pull/,' && echo "-------"
