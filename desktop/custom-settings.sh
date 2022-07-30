@@ -6,15 +6,10 @@ sudo usermod -aG sudo $USER
 echo $USER' ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
 
 #installs
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCAF35C
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ACCAF35C
-sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -iy google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
-sudo apt-key add openvpn-repo-pkg-key.pub
-sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
+sudo dpkg -i google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
-sudo apt install apt-transport-https openvpn openvpn3 git docker.io wget curl vim tmux terminator htop iotop python lm-sensors cpufrequtils net-tools grc simple-scan gthumb ubuntu-restricted-extras deluge gparted rename gnome-shell-extensions gnome-tweaks bluez-tools -y
+sudo apt install apt-transport-https openvpn git docker.io wget curl vim tmux terminator htop iotop python3 lm-sensors cpufrequtils net-tools grc simple-scan gthumb ubuntu-restricted-extras deluge gparted rename gnome-shell-extensions gnome-tweaks bluez-tools -y
 sudo snap install firefox fast gimp flameshot ffmpeg vlc subliminal-subtitles pdfmixtool
 sudo snap connect subliminal-subtitles:removable-media core
 
@@ -52,7 +47,7 @@ sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y && apt autoremov
 #bash
 mkdir $HOME/.bash
 cd $HOME/.bash
-git clone git://github.com/jimeh/git-aware-prompt.git
+git clone git@github.com:jimeh/git-aware-prompt.git
 echo '
 export EDITOR=vim
 export GITAWAREPROMPT=$HOME/.bash/git-aware-prompt
@@ -63,7 +58,7 @@ sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.s
 
 #workspace
 export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
-mkdir $WORKSPACE_PRIVATE
+mkdir -p $WORKSPACE_PRIVATE
 cd $WORKSPACE_PRIVATE
 
 #githubs repo
@@ -108,10 +103,11 @@ sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$U
 #desktop settings
 dconf write /system/locale/region "'en_US.UTF-8'"
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
-gsettings set org.gnome.desktop.wm.preferences button-layout "''"#"'close,maximize,minimize:'"
+#gsettings set org.gnome.desktop.wm.preferences button-layout "':maximize,minimize,close'"
+gsettings set org.gnome.desktop.wm.preferences button-layout "''"
 gsettings set org.gnome.desktop.background show-desktop-icons false
-gsettings set org.gnome.shell.extensions.desktop-icons show-home false
-gsettings set org.gnome.shell.extensions.desktop-icons show-trash false
+gsettings set org.gnome.shell.extensions.ding show-trash false
+gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.desktop.datetime automatic-timezone true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.interface locate-pointer false
@@ -122,7 +118,8 @@ gsettings set org.gnome.shell enabled-extensions "['user-theme@gnome-shell-exten
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
 gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 #keyboard layout
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us+altgr-intl')]"
+#gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us+altgr-intl')]"
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'latam')] "
 gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 #keybindings
 dconf write /org/gnome/settings-daemon/plugins/media-keys/www "'<Super>b'"
