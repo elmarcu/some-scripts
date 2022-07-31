@@ -102,6 +102,7 @@ sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$U
 
 #desktop settings
 dconf write /system/locale/region "'en_US.UTF-8'"
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
 #gsettings set org.gnome.desktop.wm.preferences button-layout "':maximize,minimize,close'"
 gsettings set org.gnome.desktop.wm.preferences button-layout "''"
