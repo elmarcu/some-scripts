@@ -103,6 +103,7 @@ sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$U
 #desktop settings
 dconf write /system/locale/region "'en_US.UTF-8'"
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.desktop.interface text-scaling-factor 1.35
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
 #gsettings set org.gnome.desktop.wm.preferences button-layout "':maximize,minimize,close'"
 gsettings set org.gnome.desktop.wm.preferences button-layout "''"
@@ -113,15 +114,15 @@ gsettings set org.gnome.desktop.datetime automatic-timezone true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.desktop.interface locate-pointer false
 gsettings set org.gnome.mutter dynamic-workspaces true
-gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop']"
+gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop']"
 #tweaks
-gsettings set org.gnome.shell enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.github.com']"
+gsettings set org.gnome.shell enabled-extensions "[]"
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
 gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 #keyboard layout
 #gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us+altgr-intl')]"
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'latam')] "
-gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
+gsettings set org.gnome.desktop.peripherals.keyboard numlock-state false
 #keybindings
 dconf write /org/gnome/settings-daemon/plugins/media-keys/www "'<Super>b'"
 dconf write /org/gnome/settings-daemon/plugins/media-keys/home "'<Super>x'"
