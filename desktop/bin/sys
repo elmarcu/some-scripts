@@ -7,8 +7,7 @@ if [ "$SESSIONEXISTS" = "" ]; then
     split-window -v -p 80 'htop' \; \
     split-window -v -p 30 'bash' \; \
     select-pane -t 0 \; \
-    split-window -h -p 55 'watch -n 5 -c "cpufreq-info -c 0 | grep -A3 current\ policy"' \; \
     split-window -h 'watch  -n 120 df -h' \; \
-    select-pane -t 4 \;
+    select-pane -t 3 \;
 fi
 tmux attach-session -t $SESSION:0
