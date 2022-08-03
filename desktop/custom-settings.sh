@@ -95,12 +95,12 @@ cp $WORKSPACE_PRIVATE/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
 
 #desktop executables and configs
 sudo cp $WORKSPACE_PRIVATE/some-scripts/desktop/bin/* /usr/bin/
-cp $WORKSPACE_PRIVATE/some-scripts/desktop/pam_environment $HOME/.pam_environment
 cp $WORKSPACE_PRIVATE/some-scripts/desktop/sshconfig $HOME/.ssh/config
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
 
 #desktop settings
+sudo localectl set-locale LANG=en_US.UTF-8
 dconf write /system/locale/region "'en_US.UTF-8'"
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.desktop.interface text-scaling-factor 1.35

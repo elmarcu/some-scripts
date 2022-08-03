@@ -181,6 +181,12 @@ systemctl stop thermald && systemctl disable thermald
 pulseaudio -k && sudo alsa force-reload
 --
 
+# display current settings
+localectl
+localectl list-locales
+localectl set-locale LANG=en_US.UTF-8
+--
+
 #history cmd search
 	> crtl+R
 	> grep "[SOMETHING]" .bash_history
