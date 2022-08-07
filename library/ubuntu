@@ -89,9 +89,9 @@ dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
 --
 
 #live usb creators
-usb-creator-gtk #ubuntu
-unetbootin #any
-WoeUSB #win
+sudo apt install usb-creator-gtk #ubuntu
+sudo snap install woe-usb --edg #win
+wget https://github.com/unetbootin/unetbootin/releases/download/702/unetbootin-linux64-702.bin #any
 --
 
 #notifications after job finish
