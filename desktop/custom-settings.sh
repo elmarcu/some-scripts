@@ -101,6 +101,7 @@ sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$U
 
 #desktop settings
 sudo localectl set-locale LANG=en_US.UTF-8
+sudo sed -i 's/AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
 dconf write /system/locale/region "'en_US.UTF-8'"
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.desktop.interface text-scaling-factor 1.35
