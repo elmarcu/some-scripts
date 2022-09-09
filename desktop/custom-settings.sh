@@ -10,7 +10,7 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
 sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y"
 sudo apt install apt-transport-https openvpn git docker.io wget curl vim tmux terminator htop iotop python3 lm-sensors cpufrequtils net-tools grc simple-scan gthumb ubuntu-restricted-extras deluge gparted rename gnome-shell-extensions gnome-tweaks bluez-tools pdfarranger pdfgrep -y
-sudo snap install firefox fast gimp flameshot ffmpeg vlc subliminal-subtitles pdfmixtool dbeaver-ce
+sudo snap install firefox fast gimp flameshot ffmpeg vlc subliminal-subtitles pdfmixtool dbeaver-ce obs-studio
 sudo snap connect subliminal-subtitles:removable-media core
 
 #sublime
