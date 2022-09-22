@@ -96,6 +96,7 @@ udo service bluetooth restart
 
 #aliases
 cp $WORKSPACE_PRIVATE/some-scripts/desktop/bash_aliases $HOME/.bash_aliases
+cd $WORKSPACE && for d in * ; do cd $WORKSPACE/$d && for sd in * ; do echo "alias $d-$sd='cd $WORKSPACE/$d/$sd && git remote prune origin && git pull'" >> $HOME/.bash_aliases; done; done;
 
 #desktop executables and configs
 sudo cp $WORKSPACE_PRIVATE/some-scripts/desktop/bin/* /usr/bin/
