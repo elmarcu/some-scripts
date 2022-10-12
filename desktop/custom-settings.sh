@@ -62,8 +62,8 @@ mkdir -p $WORKSPACE_PRIVATE
 cd $WORKSPACE_PRIVATE
 
 #githubs repo
-eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa-github
+ssh-keygen
+#copy id-rsa.pub contents to github user
 git clone git@github.com:elmarcu/some-scripts.git
 git clone git@github.com:elmarcu/private.git
 
@@ -75,11 +75,6 @@ done < $WORKSPACE_PRIVATE/private/bash_env_vars
 
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
-
-#ssh keys, isntead of creating new sshkey-gen, use these
-cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in $WORKSPACE_PRIVATE/private/codes.tar.gz.enc | tar xz
-#secrets
-cd $HOME/.ssh && openssl enc -aes-256-cbc -pbkdf2 -d -in passwd.tar.gz.enc | tar xz
 
 #boot options
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/' /etc/default/grub
@@ -152,9 +147,5 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[
 
 #lights- darkmode
 lights
-
-#secrets-backup
-cd $HOME/.ssh/ && tar cz access-* | openssl enc -aes-256-cbc -pbkdf2 -e > $HOME/.ssh/passwd.tar.gz.enc && rm access-*
-cd $HOME/.ssh/ && tar cz --exclude config * | openssl enc -aes-256-cbc -pbkdf2 -e > $WORKSPACE_PRIVATE/private/codes.tar.gz.enc
 
 sudo service gdm3 restart
