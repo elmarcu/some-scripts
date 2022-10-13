@@ -32,10 +32,10 @@ git tag -l | xargs git tag -d && git fetch
 git tag -l | xargs -n 1 git push --delete origin
 
 #List old QA/STG remote tags. older than 3 months
-git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -v "-1m" +%Y-%m)|$(date -v "-2m" +%Y-%m))"
+git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-1 month" +%Y-%m)|$(date -d "-2 month" +%Y-%m))"
 
 #delete old tags
-git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -v "-1m" +%Y-%m)|$(date -v "-2m" +%Y-%m))" | xargs -n 1 git push --delete origin
+git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-1 month" +%Y-%m)|$(date -d "-2 month" +%Y-%m))" | awk '{print $1}' | xargs -n 1 git push --no-verify --delete origin
 
 
 #To delete all local branches that are already merged into the currently checked out branch:
