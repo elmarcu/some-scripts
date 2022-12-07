@@ -3,7 +3,7 @@ cd $WORKSPACE
 for d in * ; do
   cd $WORKSPACE/$d
   for sd in * ; do
-    echo "backuping: $sd"
+    echo "backing up $sd"
     tar $GIT_BACKUPS_EXCLUDES -zcf "$GIT_BACKUPS_DESTINATION/$d/$sd.tar.gz" $sd;
     echo ""
   done;
