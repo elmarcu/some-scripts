@@ -1,0 +1,14 @@
+#!/bin/sh
+mkdir -p $HOME/bin
+cp $WORKSPACE_PRIVATE/some-scripts/unix/bin/* $HOME/bin/
+chmod +x $HOME/bin/*
+echo '
+alias gl_changes=$HOME/bin/gl_changes
+alias gt_cleanup=$HOME/bin/gt_cleanup
+alias gt_prune=$HOME/bin/gt_prune
+alias workspace_generator=$HOME/bin/workspace_generator
+alias workspace_puller=$HOME/bin/workspace_puller
+alias workspace_backups=$HOME/bin/workspace_backups
+' >> $HOME/.bash_aliases
+
+cd $WORKSPACE && for d in * ; do cd $WORKSPACE/$d && for sd in * ; do echo "alias $d-$sd='cd $WORKSPACE/$d/$sd && git remote prune origin && git pull'" >> $HOME/.bash_aliases; done; done;
