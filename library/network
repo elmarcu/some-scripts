@@ -21,8 +21,14 @@ ssh SERVER -L PORT:SERVERIP:PORT (-fN background)
 #list processes
 netstat -alnp   /o/  ps -ef
 
+#list ports opened
+netstat -an | grep LISTEN
+
+#list process using port
+lsof -i :[PORT]
+
 #kill process by id find by port (network)
-netstat -nap | grep ":9020" | grep CLOSE_WAIT | awk '{print $2}' | cut -d \/ -f1 | grep -oE "[[:digit:]]{1,}" | xargs kill -9
+netstat -nap | grep ":[PORT]" | grep CLOSE_WAIT | awk '{print $2}' | cut -d \/ -f1 | grep -oE "[[:digit:]]{1,}" | xargs kill -9
 --
 
 #time laps
