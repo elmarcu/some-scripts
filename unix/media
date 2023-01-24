@@ -1,15 +1,19 @@
-###mount ntfs disk
-
 sudo mkdir /Volumes/DISK
-sudo /usr/local/bin/ntfs-3g /dev/disk2s1 /Volumes/DISK -olocal -oallow_other
 
-##OR##
+###mount ntfs disk
+sudo /usr/local/bin/ntfs-3g /dev/[DISK_UUID] /Volumes/DISK -olocal -oallow_other
+
+#native
 diskutil list
 diskutil info [disk identifier]
+
+##native mount
+sudo mount -t ntfs -o rw,auto,nobrowse /dev/[DISK_UUID] /Volumes/DISK
+
+##native fstab
 sudo vim /etc/fstab
-sudo mkdir /Volumes/DISK
 add>>
-UUID=[disk volume uuid] /Volumes/DISK ntfs  rw,auto,nobrowse
+UUID=[DISK_UUID] /Volumes/DISK ntfs  rw,auto,nobrowse
 
 
 ##rsync info
