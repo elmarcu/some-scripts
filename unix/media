@@ -1,32 +1,26 @@
-sudo mkdir /Volumes/DISK
-
-###mount ntfs disk
-sudo /usr/local/bin/ntfs-3g /dev/[DISK_UUID] /Volumes/DISK -olocal -oallow_other
+mkdir ./DISK
 
 #native
 diskutil list
 diskutil info [disk identifier]
 
-##native mount
-sudo mount -t ntfs -o rw,auto,nobrowse /dev/[DISK_UUID] /Volumes/DISK
+##native mount (-t type [ntfs/APFS/HFS])
+sudo mount -t APFS -o rw,auto,nobrowse /dev/[DISK_UUID] ./DISK
 
 ##native fstab
 sudo vim /etc/fstab
 add>>
-UUID=[DISK_UUID] /Volumes/DISK ntfs  rw,auto,nobrowse
-
+UUID=[DISK_UUID] ./DISK APFS rw,auto,nobrowse
 
 ##rsync info
+sudo rsync -avz --delete --exclude='.*' --exclude='iPhoto Library.migratedphotolibrary' --exclude='migratedphotolibrary' --exclude=*. --exclude='iPhoto Library' --exclude='Photos Library.photoslibrary' /Users/[USER]/Pictures/ ./DISK/[USER]/Pictures/
+sudo rsync -avz --exclude='.*' /Users/[USER]/Documents/ ./DISK/[USER]/Documents/
 
-sudo rsync -avz --delete --exclude='.*' --exclude='iPhoto Library.migratedphotolibrary' --exclude='migratedphotolibrary' --exclude=*. --exclude='iPhoto Library' --exclude='Photos Library.photoslibrary' /Users/[USER]/Pictures/ /Volumes/DISK/[USER]/Pictures/
-
-sudo rsync -avz --exclude='.*' /Users/[USER]/Documents/ /Volumes/DISK/[USER]/Documents/
-
-sudo umount /Volumes/DISK
+#unmount disk
+sudo umount ./DISK
 
 
 ##MOUNT SAMBA FILESYSTEM FROM OTHER PC (mac o windows)
-
 sudo apt-get install cifs-utils
 sudo mkdir /mnt/local_share
 sudo mount -t cifs -o user=[USER],vers=3.0 //[IP_NETWORK]/[PATH]/ /mnt/local_share/
