@@ -2,6 +2,8 @@
 GIT_BACKUPS_EXCLUDES="--exclude node_modules --exclude images --exclude imagenes --exclude example --exclude .git --exclude assets --exclude theme --exclude ingest"
 GIT_BACKUPS_DESTINATION=$HOME/backups
 
+rm -rf $GIT_BACKUPS_DESTINATION/*
+
 cd $WORKSPACE
 for d in * ; do
   cd $WORKSPACE/$d
