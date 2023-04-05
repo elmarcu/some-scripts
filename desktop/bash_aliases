@@ -2,12 +2,13 @@
 
 ##GIT
 alias gs='git status'
-alias gcm='git commit -am'
+alias gcm='git commit --no-verify -am'
 alias gps='git push --no-verify'
 alias gpsf='git push origin --force'
 alias gpl='git pull'
 alias gl='git log --oneline --decorate --graph'
 alias gt='git tag'
+alias gtps='git push origin --tags'
 alias gb='git branch'
 alias gc='git checkout'
 alias gcp='git cherry-pick'
