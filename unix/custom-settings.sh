@@ -19,6 +19,7 @@ export WORKSPACE=$(echo $HOME)/workspace
 export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu
 export NAME=$NAME
 export EMAIL=$EMAIL
+export GITHUB_TOKEN=$GITHUB_TOKEN
 " >> $HOME/.zshrc
 
 #executables
