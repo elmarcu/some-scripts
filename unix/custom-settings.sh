@@ -3,6 +3,8 @@ export WORKSPACE=$(echo $HOME)/workspace
 export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu && mkdir -p $WORKSPACE_PRIVATE
 read NAME && export NAME=$NAME
 read EMAIL && export EMAIL=$EMAIL
+#FROM https://github.com/settings/tokens
+read GITHUB_TOKEN && export GITHUB_TOKEN=$GITHUB_TOKEN
 
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
