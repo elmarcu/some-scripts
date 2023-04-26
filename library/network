@@ -51,6 +51,7 @@ ab -n 100 -c 100 http://sitioweb.com/
 
 #measure time curl/(or any command) response
 time curl -vk http://google.com/
+curl -o /dev/null -s -w %{time_total} http://google.com/
 --
 
 netstat -lpn | less
