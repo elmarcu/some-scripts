@@ -464,3 +464,9 @@ find ./ | egrep -v "(google-api|fonts|theme|.git|assets|images|.jpg|.png|libs)" 
 find ./app/ | xargs wc -l
 find ./ | egrep -v "(.pyc|.csv|.sql)" | xargs wc -l
 find ./src/ | xargs wc -l
+
+#prettify json
+cat sample.json | jq
+python3 -m json.tool sample.json
+#unix
+cat sample.json| json_pp
