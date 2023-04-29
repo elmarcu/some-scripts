@@ -100,7 +100,7 @@ _.*         <- excludes _files and _directories
 
 
 #example
-gsutil rsync -dr -x '.*/\.[^/]*$|.*/\..*/.*$|.*/assets.*$|.*/theme.*$' workspace/ gs://bucket/vix/
+gsutil rsync -dr -x '.*/\.[^/]*$|.*/\..*/.*$|.*/assets.*$|.*/theme.*$' workspace/ gs://bucket/sub_folder/
 --
 
 ##BACKUP GIT AND TAR TO STORAGE

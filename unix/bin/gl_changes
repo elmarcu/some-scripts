@@ -2,7 +2,7 @@
 tag1=$1
 tag2=$2
 REPO=$(git remote get-url origin | sed 's,git@github.com:,https://github.com/,' | sed 's,\.git,/pull/,' )
-JIRA="https://televisaunivision.atlassian.net/issues/?jql=key%20in%20("
+JIRA="https://$JIRA_PROJECT/issues/?jql=key%20in%20("
 
 git log --oneline $tag1...$tag2 && echo "-------" && echo ""
 

@@ -3,8 +3,11 @@ export WORKSPACE=$(echo $HOME)/workspace
 export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu && mkdir -p $WORKSPACE_PRIVATE
 read NAME && export NAME=$NAME
 read EMAIL && export EMAIL=$EMAIL
-#FROM https://github.com/settings/tokens
 read GITHUB_TOKEN && export GITHUB_TOKEN=$GITHUB_TOKEN
+read GITHUB_PROJECT && export GITHUB_PROJECT=$GITHUB_PROJECT
+read SLACK_TOKEN && export SLACK_TOKEN=$SLACK_TOKEN
+read JIRA_PROJECT && export JIRA_PROJECT=$JIRA_PROJECT
+read API_PROJECT && export API_PROJECT=$API_PROJECT
 
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -22,6 +25,10 @@ export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu
 export NAME=$NAME
 export EMAIL=$EMAIL
 export GITHUB_TOKEN=$GITHUB_TOKEN
+export GITHUB_PROJECT=$GITHUB_PROJECT
+export SLACK_TOKEN=$SLACK_TOKEN
+export JIRA_PROJECT=$JIRA_PROJECT
+export API_PROJECT=$API_PROJECT
 " >> $HOME/.zshrc
 
 #executables
