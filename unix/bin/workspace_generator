@@ -13,7 +13,8 @@ echo '
 alias gl_changes=$HOME/bin/gl_changes
 alias gt_cleanup=$HOME/bin/gt_cleanup
 alias gt_prune=$HOME/bin/gt_prune
-alias gb_protect==$HOME/bin/gb_protect
+alias gb_protect=$HOME/bin/gb_protect
+alias sl_topic=$HOME/bin/sl_topic
 alias workspace_generator=$HOME/bin/workspace_generator
 alias workspace_puller=$HOME/bin/workspace_puller
 alias workspace_backups=$HOME/bin/workspace_backups
