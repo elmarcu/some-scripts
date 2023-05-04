@@ -4,7 +4,6 @@
 #SLACK_TOKEN=(get token from https://api.slack.com/authentication/token-types#user)
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
-TEST_SLACK_CHANNEL_ID="C04RUD6GB9T"
 DEVS_SLACK_CHANNEL_ID="C0317UN5K8D"
 QA_SLACK_CHANNEL_ID="C036D5SL3RS"
 
@@ -62,31 +61,23 @@ while read line; do
 done < .tmp_git_tags.json
 VERSIONS="Version: QA $VERSION_QA$STATUS_QA | STG $VERSION_STG$STATUS_STG | PROD $VERSION_PROD$STATUS_PROD"
 
-TOPIC="$FREEZE |/\| $VERSIONS"
+MESSAGE="$FREEZE |/\| $VERSIONS"
 
-echo "Topic to show"
-echo "$TOPIC"
+echo "Message to show"
+echo "$MESSAGE"
 
 echo ""
-read -p "Send topic to channels? [test|t,devs_qa|d]" doit
+read -p "Send message to channels? [yes|y]" doit
 case $doit in
-    test|t)
-        curl -sL \
-        -X POST \
-        -H "Accept: application/json" \
-        -H "Authorization: Bearer $SLACK_TOKEN"\
-        https://slack.com/api/conversations.setTopic \
-        -d "channel=$TEST_SLACK_CHANNEL_ID&topic=$TOPIC"
-    ;;
-    devs_qa|d)
+    yes|y)
         for SLACK_CHANNEL_ID in $DEVS_SLACK_CHANNEL_ID $QA_SLACK_CHANNEL_ID
         do
             curl -sL \
             -X POST \
             -H "Accept: application/json" \
-            -H "Authorization: Bearer $SLACK_TOKEN"\
-            https://slack.com/api/conversations.setTopic \
-            -d "channel=$SLACK_CHANNEL_ID&topic=$TOPIC"
+            -H "Authorization: Bearer $SLACK_TOKEN" \
+            https://slack.com/api/chat.postMessage \
+            -d "channel=$SLACK_CHANNEL_ID&text=$MESSAGE"
         done
     ;;
     *) echo "Aborted" ;;
