@@ -1,6 +1,6 @@
 #!/bin/bash
-#small script for changing slack channel's topic
-#https://api.slack.com/methods/conversations.setTopic
+#small script for messaging a slack channel
+#https://api.slack.com/methods/chat.postMessage
 #SLACK_TOKEN=(get token from https://api.slack.com/authentication/token-types#user)
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
@@ -22,7 +22,7 @@ STATUS_PROD=":this-is-fine-fire:"
 MERGE_FREE=":white_check_mark:"
 MERGE_LOCKED=":red-light-blinker::cold_face:"
 
-echo "Loading topic..."
+echo "Loading message..."
 
 ## find out which repos have branch protection
 for REPO in $REPO_CMS $REPO_EDITORIAL
@@ -44,21 +44,27 @@ status () {
 FREEZE="Merge: $REPO_CMS $(status $REPO_CMS) $REPO_EDITORIAL $(status $REPO_EDITORIAL)"
 
 ## find out SE versions on each ENV
+for ENV in "qa" "stg" "prd"
+do
     curl -sL \
     -H "Accept: application/json" \
-    "https://$API_PROJECT/api/v1/versionLog" | json_pp | grep '"tag" : "' | tr -d '"tag" : "' > .tmp_git_tags.json
+    https://$REPO_EDITORIAL.$ENV.$API_PROJECT/api/v1/versionLog | json_pp | grep '"tag" : "' | tr -d '"tag" : "' > .tmp_git_$ENV.json
 
-while read line; do
-    if [[ "$VERSION_QA" == "" ]] && [[ $line == *"-be" ]]; then
-        VERSION_QA="${line}ta"
-    fi
-    if [[ "$VERSION_STG" == "" ]] && [[ $line == *"-rc" ]]; then
-        VERSION_STG=$line
-    fi
-    if [[ "$VERSION_PROD" == "" ]] && [[ $line != *"-be" ]] && [[ $line != *"-rc" ]]; then
-        VERSION_PROD=$line
-    fi
-done < .tmp_git_tags.json
+    while read line; do
+        if [[ "$ENV" == "qa" ]] && [[ "$VERSION_QA" == "" ]] && [[ $line == *"-be" ]]; then
+            VERSION_QA="${line}ta"
+            break
+        fi
+        if [[ "$ENV" == "stg" ]] && [[ "$VERSION_STG" == "" ]] && [[ $line == *"-rc" ]]; then
+            VERSION_STG=$line
+            break
+        fi
+        if [[ "$ENV" == "prd" ]] && [[ "$VERSION_PROD" == "" ]] && [[ $line != *"-be" ]] && [[ $line != *"-rc" ]]; then
+            VERSION_PROD=$line
+            break
+        fi
+    done < .tmp_git_$ENV.json
+done
 VERSIONS="Version: QA $VERSION_QA$STATUS_QA | STG $VERSION_STG$STATUS_STG | PROD $VERSION_PROD$STATUS_PROD"
 
 MESSAGE="$FREEZE |/\| $VERSIONS"
@@ -85,4 +91,4 @@ esac
 
 rm .tmp_$REPO_CMS.json
 rm .tmp_$REPO_EDITORIAL.json
-rm .tmp_git_tags.json
+rm .tmp_git_*.json
