@@ -1,2 +1,2 @@
-30 09,11,14,16 * * * cat /dev/null > $HOME/.stdout.log; cat /dev/null > $HOME/.stderr.log; /usr/bin/workspace_puller; >>$HOME/.stdout.log 2>>$HOME/.stderr.log; /usr/bin/workspace_backups >>$HOME/.stdout.log 2>>$HOME/.stderr.log;
+0 10,11,14,15,16,17 * * * cat /dev/null > $HOME/.stdout.log; cat /dev/null > $HOME/.stderr.log; $HOME/bin/workspace_puller >>$HOME/.stdout.log 2>>$HOME/.stderr.log; $HOME/bin/workspace_backups >>$HOME/.stdout.log 2>>$HOME/.stderr.log
 #0 18 * * FRI docker system prune --volumes -f && docker image prune -a -f >>$HOME/.stdout.log 2>>$HOME/.stderr.log
