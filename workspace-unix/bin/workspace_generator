@@ -2,11 +2,11 @@
 
 #executables
 mkdir -p $HOME/bin
-cp $WORKSPACE_PRIVATE/some-scripts/unix/bin/* $HOME/bin/
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/bin/
 chmod +x $HOME/bin/*
 
 #aliases
-cp $WORKSPACE_PRIVATE/some-scripts/unix/bash_aliases $HOME/.bash_aliases
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bash_aliases $HOME/.bash_aliases
 
 #executables as alias
 echo '

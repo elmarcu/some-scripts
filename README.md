@@ -4,9 +4,9 @@ All sorts of scripts and guides
 
 linux - scripts,
 commands and shortcuts for working under debian/ubuntu
-linux/custom-setting.sh will help set up a workspace with ubuntu instalations atom|vscode docker vpn etc
 
-unix - linux, shortcuts and useful scripts for mac
+workspace-unix / workspace-linux, shortcuts and useful scripts for mac
+custom-setting.sh will help set up a workspace with ubuntu instalations atom|vscode docker vpn etc
 
 db - for databases
 

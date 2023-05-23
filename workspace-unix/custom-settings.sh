@@ -13,7 +13,7 @@ read API_PROJECT && export API_PROJECT=$API_PROJECT
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 #import ALIASES to profile file
-cp $WORKSPACE_PRIVATE/some-scripts/unix/bash_aliases $HOME/.bash_aliases
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-bash_aliases $HOME/.bash_aliases
 echo 'if [[ -n .bash_aliases ]]; then
   source ~/.bash_aliases
 fi' >> $HOME/.zshrc
@@ -33,7 +33,7 @@ export API_PROJECT=$API_PROJECT
 
 #executables
 mkdir -p $HOME/bin
-cp $WORKSPACE_PRIVATE/some-scripts/unix/bin/* $HOME/bin/
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/bin/
 chmod +x $HOME/bin/*
 
 #workspace and fast aliases generator
@@ -51,6 +51,6 @@ git config --global user.name "$NAME"
 git config --global --replace-all core.pager "less -F -X"
 
 #crontab
-echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/unix/crontab-scripts)" > .tempfile
+echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-unix/crontab-scripts)" > .tempfile
 (cat .tempfile ) | crontab -
 rm .tempfile
