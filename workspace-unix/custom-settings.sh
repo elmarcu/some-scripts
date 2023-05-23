@@ -12,19 +12,6 @@ read API_PROJECT && export API_PROJECT=$API_PROJECT
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-#profile
-echo "
-export WORKSPACE=$(echo $HOME)/workspace
-export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
-export NAME=$NAME
-export EMAIL=$EMAIL
-export GITHUB_TOKEN=$GITHUB_TOKEN
-export GITHUB_PROJECT=$GITHUB_PROJECT
-export SLACK_TOKEN=$SLACK_TOKEN
-export JIRA_PROJECT=$JIRA_PROJECT
-export API_PROJECT=$API_PROJECT
-" >> $HOME/.zshrc
-
 #githubs repo
 cd $WORKSPACE_PRIVATE
 ssh-keygen
@@ -42,13 +29,27 @@ echo 'if [[ -n .bash_aliases ]]; then
   source ~/.bash_aliases
 fi' >> $HOME/.zshrc
 
+#profile
+echo "
+export WORKSPACE=$(echo $HOME)/workspace
+export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
+export NAME=$NAME
+export EMAIL=$EMAIL
+export GITHUB_TOKEN=$GITHUB_TOKEN
+export GITHUB_PROJECT=$GITHUB_PROJECT
+export SLACK_TOKEN=$SLACK_TOKEN
+export JIRA_PROJECT=$JIRA_PROJECT
+export API_PROJECT=$API_PROJECT
+" >> $HOME/.zshrc
+
 #executables
-mkdir -p $HOME/bin
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/bin/
-chmod +x $HOME/bin/*
+mkdir -p $HOME/.bin
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/.bin/
+chmod +x $HOME/.bin/*
 
 #workspace and fast aliases generator
-$HOME/bin/workspace_generator
+$HOME/.bin/workspace_generator
 
 #crontab
 echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts)" > .tempfile

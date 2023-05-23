@@ -74,11 +74,14 @@ done < $WORKSPACE_PRIVATE/private/bash_env_vars
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
 
-#aliases
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bash_aliases $HOME/.bash_aliases
-
 #desktop executables and configs
-sudo cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/bin/* /usr/bin/
+mkdir -p $HOME/.bin
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/bin/* $HOME/.bin/
+chmod +x $HOME/.bin/*
+#workspace and fast aliases generator
+$HOME/.bin/workspace_generator
+#profile
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
 
