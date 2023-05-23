@@ -1,6 +1,6 @@
 #workspace
 export WORKSPACE=$(echo $HOME)/workspace
-export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu && mkdir -p $WORKSPACE_PRIVATE
+export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER) && mkdir -p $WORKSPACE_PRIVATE
 read NAME && export NAME=$NAME
 read EMAIL && export EMAIL=$EMAIL
 read GITHUB_TOKEN && export GITHUB_TOKEN=$GITHUB_TOKEN
@@ -15,7 +15,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 #profile
 echo "
 export WORKSPACE=$(echo $HOME)/workspace
-export WORKSPACE_PRIVATE=$(echo $WORKSPACE)/marcu
+export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
 export NAME=$NAME
 export EMAIL=$EMAIL
 export GITHUB_TOKEN=$GITHUB_TOKEN
