@@ -15,19 +15,16 @@ sudo snap connect subliminal-subtitles:removable-media core
 
 #sublime
 sudo snap install sublime-text --classic --edge
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-sublime.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
 #atom
 sudo snap install atom --classic
 apm install language-nginx language-docker language-vue sort-lines
 # apm install language-brightscript roku-develop
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-atom.cson $HOME/.atom/config.cson
 
 #vscode
 sudo snap install code --classic
 #code --list-extensions
 code --install-extension raynigon.nginx-formatter ms-azuretools.vscode-docker ms-python.python ms-vscode-remote.remote-containers
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-vscode.json $HOME/.config/Code/User/settings.json
 
 #mongo
 wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
@@ -57,6 +54,7 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 sed -i 's/^SELECTED_EDITOR=.*/SELECTED_EDITOR="\/usr\/bin\/vim.basic"/' $HOME/.selected_editor
 
 #workspace
+export WORKSPACE=$(echo $HOME)/workspace
 export WORKSPACE_PRIVATE=$(echo $HOME)/workspace/$(echo $USER)
 mkdir -p $WORKSPACE_PRIVATE
 cd $WORKSPACE_PRIVATE
@@ -76,6 +74,23 @@ done < $WORKSPACE_PRIVATE/private/bash_env_vars
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
 
+#aliases
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bash_aliases $HOME/.bash_aliases
+
+#desktop executables and configs
+sudo cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/bin/* /usr/bin/
+cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
+sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
+
+#IDE configs
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-sublime.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-atom.cson $HOME/.atom/config.cson
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-vscode.json $HOME/.config/Code/User/settings.json
+
+#crontab
+(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/private/bash_env_vars ) | crontab -u $USER -
+(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts ) | crontab -u $USER -
+
 #boot options
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/' /etc/default/grub
 sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' /etc/default/grub
@@ -84,18 +99,6 @@ sudo update-grub
 #bluetooth
 sudo sed -i 's/AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
 udo service bluetooth restart
-
-#crontab
-(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/private/bash_env_vars ) | crontab -u $USER -
-(crontab -u $USER -l; cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts ) | crontab -u $USER -
-
-#aliases
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bash_aliases $HOME/.bash_aliases
-
-#desktop executables and configs
-sudo cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/bin/* /usr/bin/
-cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
-sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
 
 #desktop settings
 sudo localectl set-locale LANG=en_US.UTF-8
