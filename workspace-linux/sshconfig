@@ -1,6 +1,0 @@
-Host *
-	ForwardAgent yes
-
-Host github
-	IdentityFile ~/.ssh/id_rsa-github
-	Hostname github.com

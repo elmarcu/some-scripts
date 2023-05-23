@@ -12,12 +12,6 @@ read API_PROJECT && export API_PROJECT=$API_PROJECT
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-#import ALIASES to profile file
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-bash_aliases $HOME/.bash_aliases
-echo 'if [[ -n .bash_aliases ]]; then
-  source ~/.bash_aliases
-fi' >> $HOME/.zshrc
-
 #profile
 echo "
 export WORKSPACE=$(echo $HOME)/workspace
@@ -31,14 +25,6 @@ export JIRA_PROJECT=$JIRA_PROJECT
 export API_PROJECT=$API_PROJECT
 " >> $HOME/.zshrc
 
-#executables
-mkdir -p $HOME/bin
-cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/bin/
-chmod +x $HOME/bin/*
-
-#workspace and fast aliases generator
-$HOME/bin/workspace_generator
-
 #githubs repo
 cd $WORKSPACE_PRIVATE
 ssh-keygen
@@ -50,7 +36,21 @@ git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
 git config --global --replace-all core.pager "less -F -X"
 
+#import ALIASES to profile file
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bash_aliases $HOME/.bash_aliases
+echo 'if [[ -n .bash_aliases ]]; then
+  source ~/.bash_aliases
+fi' >> $HOME/.zshrc
+
+#executables
+mkdir -p $HOME/bin
+cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/bin/
+chmod +x $HOME/bin/*
+
+#workspace and fast aliases generator
+$HOME/bin/workspace_generator
+
 #crontab
-echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-unix/crontab-scripts)" > .tempfile
+echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts)" > .tempfile
 (cat .tempfile ) | crontab -
 rm .tempfile
