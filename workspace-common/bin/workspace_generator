@@ -17,3 +17,7 @@ alias workspace_backups=$HOME/.bin/workspace_backups
 
 #workspace shortcuts
 cd $WORKSPACE && for d in * ; do cd $WORKSPACE/$d && for sd in * ; do echo "alias $d-$sd='cd $WORKSPACE/$d/$sd && git remote prune origin && git pull && git status'" >> $HOME/.bash_aliases; done; done;
+
+#workspace clone script (for other workspaces)
+rm $HOME/.git_clone_repos
+cd $WORKSPACE && for d in * ; do cd $WORKSPACE/$d && for sd in * ; do cd $WORKSPACE/$d/$sd && echo "mkdir -p \$WORKSPACE/$d && cd \$WORKSPACE/$d && git clone $(git remote get-url origin)" >> $HOME/.git_clone_repos; done; done;

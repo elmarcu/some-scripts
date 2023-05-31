@@ -40,3 +40,6 @@ chmod +x $HOME/.bin/*
 
 #workspace and fast aliases generator
 $HOME/.bin/workspace_generator
+
+#copy and run contents of .git_clone_repos
+cat $HOME/.git_clone_repos
