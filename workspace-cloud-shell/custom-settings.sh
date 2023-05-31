@@ -30,6 +30,7 @@ git clone git@github.com:elmarcu/some-scripts.git
 
 git config --global user.email "$EMAIL"
 git config --global user.name "$NAME"
+git config --global pull.ff only
 
 #executables
 mkdir -p $HOME/.bin
