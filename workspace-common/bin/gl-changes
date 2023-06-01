@@ -1,0 +1,11 @@
+#!/bin/bash
+tag1=$1
+tag2=$2
+REPO=$(git remote get-url origin | sed 's,git@github.com:,https://github.com/,' | sed 's,\.git,/pull/,' )
+JIRA="https://$JIRA_PROJECT/issues/?jql=key%20in%20("
+
+git log --oneline $tag1...$tag2 && echo "-------" && echo ""
+
+git log --oneline $tag1...$tag2 | grep -i 'cms-' | tr '[' ' ' | tr ']' ' ' | awk '{print$2}' | tr '\n' ',' | sed 's/,$/)/' | sed 's/ //' | sed -e "s,^,$JIRA," && echo "" && echo "-------"
+
+git log --oneline $tag1...$tag2 | grep -vi 'cms' | tr '[' ' ' | tr ']' ' ' | sed "s,(#,$REPO," && echo "-------"
