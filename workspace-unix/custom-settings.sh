@@ -49,7 +49,7 @@ cp $WORKSPACE_PRIVATE/some-scripts/workspace-unix/bin/* $HOME/.bin/
 chmod +x $HOME/.bin/*
 
 #workspace and fast aliases generator
-$HOME/.bin/workspace_generator
+$HOME/.bin/workspace-generator
 
 #crontab
 echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts)" > .tempfile

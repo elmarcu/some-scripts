@@ -80,7 +80,7 @@ cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/bin/* $HOME/.bin/
 chmod +x $HOME/.bin/*
 #workspace and fast aliases generator
-$HOME/.bin/workspace_generator
+$HOME/.bin/workspace-generator
 #profile
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
