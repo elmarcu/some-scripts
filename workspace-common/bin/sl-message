@@ -5,7 +5,7 @@
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
 DEVS_SLACK_CHANNEL_ID="C0317UN5K8D"
-QA_SLACK_CHANNEL_ID="C036D5SL3RS"
+QA_SLACK_CHANNEL_ID="C05FZ5NB8J1"
 
 REPO_CMS="client-cms-web"
 REPO_EDITORIAL="service-editorial"
