@@ -67,7 +67,7 @@ do
 done
 VERSIONS="Version: QA $VERSION_QA$STATUS_QA | STG $VERSION_STG$STATUS_STG | PROD $VERSION_PROD$STATUS_PROD"
 
-MESSAGE="$FREEZE |/\| $VERSIONS"
+MESSAGE="$FREEZE ---- $VERSIONS"
 
 echo "Message to show"
 echo "$MESSAGE"
@@ -78,12 +78,19 @@ case $doit in
     yes|y)
         for SLACK_CHANNEL_ID in $DEVS_SLACK_CHANNEL_ID $QA_SLACK_CHANNEL_ID
         do
-            curl -sL \
+            TS=$(curl -sL \
             -X POST \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $SLACK_TOKEN" \
             https://slack.com/api/chat.postMessage \
-            -d "channel=$SLACK_CHANNEL_ID&text=$MESSAGE"
+            -d "channel=$SLACK_CHANNEL_ID&text=$MESSAGE" | json_pp | grep -m 1 '"ts" : "' | tr '"' ' ' | tr ',' ' '  | awk '{print $3}')
+
+            curl -sL \
+            -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer $SLACK_TOKEN" \
+            https://slack.com/api/pins.add \
+            -d "channel=$SLACK_CHANNEL_ID&timestamp=$TS"
         done
     ;;
     *) echo "Aborted" ;;
