@@ -1,12 +1,14 @@
 #!/bin/bash
 #small script for messaging a slack channel
 #https://api.slack.com/methods/chat.postMessage
+
 #SLACK_TOKEN=(get token from https://api.slack.com/authentication/token-types#user)
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
 DEVS_SLACK_CHANNEL_ID="C0317UN5K8D"
 QA_SLACK_CHANNEL_ID="C05FZ5NB8J1"
 
+PROJECT_NAME="televisa"
 REPO_CMS="client-cms-web"
 REPO_EDITORIAL="service-editorial"
 BRANCH="main"
@@ -46,12 +48,10 @@ FREEZE="Merge: $REPO_CMS $(status $REPO_CMS) $REPO_EDITORIAL $(status $REPO_EDIT
 ## find out SE versions on each ENV
 for ENV in "qa" "stg" "prd"
 do
-    curl -sL \
-    -H "Accept: application/json" \
-    https://$REPO_EDITORIAL.$ENV.$API_PROJECT/api/v1/versionLog | json_pp | grep '"tag" : "' | tr -d '"tag" : "' > .tmp_git_$ENV.json
+   git -C $WORKSPACE/$PROJECT_NAME/$REPO_EDITORIAL tag --sort=-creatordate > .tmp_git_$ENV.json
 
     while read line; do
-        if [[ "$ENV" == "qa" ]] && [[ "$VERSION_QA" == "" ]] && [[ $line == *"-be" ]]; then
+        if [[ "$ENV" == "qa" ]] && [[ "$VERSION_QA" == "" ]] && [[ $line == *"-beta" ]]; then
             VERSION_QA="${line}ta"
             break
         fi
@@ -59,14 +59,13 @@ do
             VERSION_STG=$line
             break
         fi
-        if [[ "$ENV" == "prd" ]] && [[ "$VERSION_PROD" == "" ]] && [[ $line != *"-be" ]] && [[ $line != *"-rc" ]]; then
+        if [[ "$ENV" == "prd" ]] && [[ "$VERSION_PROD" == "" ]] && [[ $line != *"-beta" ]] && [[ $line != *"-rc" ]]; then
             VERSION_PROD=$line
             break
         fi
     done < .tmp_git_$ENV.json
 done
 VERSIONS="Version: QA $VERSION_QA$STATUS_QA | STG $VERSION_STG$STATUS_STG | PROD $VERSION_PROD$STATUS_PROD"
-
 MESSAGE="$FREEZE ---- $VERSIONS"
 
 echo "Message to show"
