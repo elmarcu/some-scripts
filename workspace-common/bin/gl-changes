@@ -1,4 +1,6 @@
 #!/bin/bash
+#small script for comparing two tags
+
 tag1=$1
 tag2=$2
 REPO=$(git remote get-url origin | sed 's,git@github.com:,https://github.com/,' | sed 's,\.git,/pull/,' )
