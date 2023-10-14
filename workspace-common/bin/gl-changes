@@ -1,13 +1,22 @@
 #!/bin/bash
 #small script for comparing two tags
 
-tag1=$1
-tag2=$2
+git log --oneline --decorate --graph --color=always | head -n 15
+
+read -p "Select first tag ->" tag1
+read -p "Select second tag ->" tag2
+
 REPO=$(git remote get-url origin | sed 's,git@github.com:,https://github.com/,' | sed 's,\.git,/pull/,' )
 JIRA="https://$JIRA_PROJECT/issues/?jql=key%20in%20("
 
+echo ""
+echo "all changes between"
 git log --oneline $tag1...$tag2 && echo "-------" && echo ""
 
+echo ""
+echo "link to JIRA"
 git log --oneline $tag1...$tag2 | grep -i 'cms-' | tr '[' ' ' | tr ']' ' ' | awk '{print$2}' | tr '\n' ',' | sed 's/,$/)/' | sed 's/ //' | sed -e "s,^,$JIRA," && echo "" && echo "-------"
 
+echo ""
+echo "remaining PRs"
 git log --oneline $tag1...$tag2 | grep -vi 'cms' | tr '[' ' ' | tr ']' ' ' | sed "s,(#,$REPO," && echo "-------"
