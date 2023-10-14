@@ -15,8 +15,8 @@ git log --oneline $tag1...$tag2 && echo "-------" && echo ""
 
 echo ""
 echo "link to JIRA"
-git log --oneline $tag1...$tag2 | grep -i 'cms-' | tr '[' ' ' | tr ']' ' ' | awk '{print$2}' | tr '\n' ',' | sed 's/,$/)/' | sed 's/ //' | sed -e "s,^,$JIRA," && echo "" && echo "-------"
+git log --oneline $tag1...$tag2 | grep -i '\[' | grep -i '\]' | tr '[' ' ' | tr ']' ' ' | awk '{print$2}' | tr '\n' ',' | sed 's/,$/)/' | sed 's/ //' | sed -e "s,^,$JIRA," && echo "" && echo "-------"
 
 echo ""
 echo "remaining PRs"
-git log --oneline $tag1...$tag2 | grep -vi 'cms' | tr '[' ' ' | tr ']' ' ' | sed "s,(#,$REPO," && echo "-------"
+git log --oneline $tag1...$tag2 | grep -vi '\[' | sed "s,(#,$REPO," && echo "-------"
