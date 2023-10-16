@@ -2,64 +2,69 @@
 #small script for messaging a slack channel
 #https://api.slack.com/methods/chat.postMessage
 
+#GITHUB_PROJECT=(project on github.com)
 #SLACK_TOKEN=(get token from https://api.slack.com/authentication/token-types#user)
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
-DEVS_SLACK_CHANNEL_ID="C0317UN5K8D"
-QA_SLACK_CHANNEL_ID="C05FZ5NB8J1"
+SLACK_CHANNELS="C0317UN5K8D,C05FZ5NB8J1"
 
-PROJECT_NAME="televisa"
-REPO_CMS="client-cms-web"
-REPO_EDITORIAL="service-editorial"
+WORKSPACE_PROJECT_NAME="televisa"
+REPOS="client-cms-web,service-editorial,service-editorial-cloud-functions,service-editorial-scheduler"
 BRANCH="main"
 
+ENV_NAME_QA="qa"
 VERSION_QA=""
+TAG_QA="-beta"
+
+ENV_NAME_STG="stg"
 VERSION_STG=""
+TAG_STG="-rc"
+
+ENV_NAME_PROD="prd"
 VERSION_PROD=""
+ENVIRONMENTS="qa,stg,prd"
 
 STATUS_QA=":hammer_and_pick:"
 STATUS_STG=":rocket:"
 STATUS_PROD=":this-is-fine-fire:"
 
+FREEZE=""
 MERGE_FREE=":white_check_mark:"
 MERGE_LOCKED=":red-light-blinker::cold_face:"
+
+REPO_EDITORIAL="service-editorial"
 
 echo "Loading message..."
 
 ## find out which repos have branch protection
-for REPO in $REPO_CMS $REPO_EDITORIAL
+for REPO in ${REPOS//,/ }
 do
     curl -sL \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
-    "https://api.github.com/repos/$GITHUB_PROJECT/$REPO/branches/$BRANCH/protection" | grep lock_branch -A 2 > .tmp_$REPO.json
+    "https://api.github.com/repos/$GITHUB_PROJECT/$REPO/branches/$BRANCH/protection" | grep lock_branch -A 2 > .tmp_git_$REPO.json
+
+    FREEZE="$FREEZE$REPO $(if grep -q false ".tmp_git_$REPO.json"; then echo $MERGE_FREE; else echo $MERGE_LOCKED; fi) "
 done
 
-status () {
-    if grep -q false ".tmp_$1.json"; then
-        echo $MERGE_FREE
-    else
-        echo $MERGE_LOCKED
-    fi
-}
-FREEZE="Merge: $REPO_CMS $(status $REPO_CMS) $REPO_EDITORIAL $(status $REPO_EDITORIAL)"
+FREEZE="Merge: $FREEZE"
 
 ## find out SE versions on each ENV
-for ENV in "qa" "stg" "prd"
+for ENV in ${ENVIRONMENTS//,/ }
 do
-   git -C $WORKSPACE/$PROJECT_NAME/$REPO_EDITORIAL tag --sort=-creatordate > .tmp_git_$ENV.json
+   git -C $WORKSPACE/$WORKSPACE_PROJECT_NAME/$REPO_EDITORIAL tag --sort=-creatordate > .tmp_git_$ENV.json
 
     while read line; do
-        if [[ "$ENV" == "qa" ]] && [[ "$VERSION_QA" == "" ]] && [[ $line == *"-beta" ]]; then
-            VERSION_QA="${line}ta"
+        if [[ "$ENV" == "$ENV_NAME_QA" ]] && [[ "$VERSION_QA" == "" ]] && [[ $line == *"$TAG_QA" ]]; then
+            VERSION_QA=$line
             break
         fi
-        if [[ "$ENV" == "stg" ]] && [[ "$VERSION_STG" == "" ]] && [[ $line == *"-rc" ]]; then
+        if [[ "$ENV" == "$ENV_NAME_STG" ]] && [[ "$VERSION_STG" == "" ]] && [[ $line == *"$TAG_STG" ]]; then
             VERSION_STG=$line
             break
         fi
-        if [[ "$ENV" == "prd" ]] && [[ "$VERSION_PROD" == "" ]] && [[ $line != *"-beta" ]] && [[ $line != *"-rc" ]]; then
+        if [[ "$ENV" == "$ENV_NAME_PROD" ]] && [[ "$VERSION_PROD" == "" ]] && [[ $line != *"$TAG_QA" ]] && [[ $line != *"$TAG_STG" ]]; then
             VERSION_PROD=$line
             break
         fi
@@ -75,7 +80,7 @@ echo ""
 read -p "Send message to channels? [yes|y]" doit
 case $doit in
     yes|y)
-        for SLACK_CHANNEL_ID in $DEVS_SLACK_CHANNEL_ID $QA_SLACK_CHANNEL_ID
+        for SLACK_CHANNEL_ID in ${SLACK_CHANNELS//,/ }
         do
             TS=$(curl -sL \
             -X POST \
@@ -95,6 +100,4 @@ case $doit in
     *) echo "Aborted" ;;
 esac
 
-rm .tmp_$REPO_CMS.json
-rm .tmp_$REPO_EDITORIAL.json
 rm .tmp_git_*.json
