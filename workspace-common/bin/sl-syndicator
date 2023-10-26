@@ -29,13 +29,13 @@ for REPO in ${REPOS//,/ }
 do
     git -C $WORKSPACE/$WORKSPACE_PROJECT_NAME/$REPO tag --sort=-creatordate > .tmp_git_$REPO.json
     while read line; do
-        if [[ "$VERSION_QA" == "" ]] && [[ $line == *"$TAG_QA" ]]; then
+        if [[ "$VERSION_QA" == "" ]] && [[ $line == *"$TAG_QA"* ]]; then
             VERSION_QA=$line
         fi
-        if [[ "$VERSION_STG" == "" ]] && [[ $line == *"$TAG_STG" ]]; then
+        if [[ "$VERSION_STG" == "" ]] && [[ $line == *"$TAG_STG"* ]]; then
             VERSION_STG=$line
         fi
-        if [[ "$VERSION_PROD" == "" ]] && [[ $line != *"$TAG_QA" ]] && [[ $line != *"$TAG_STG" ]]; then
+        if [[ "$VERSION_PROD" == "" ]] && [[ $line != *"$TAG_QA"* ]] && [[ $line != *"$TAG_STG"* ]]; then
             VERSION_PROD=$line
         fi
     done < .tmp_git_$REPO.json
