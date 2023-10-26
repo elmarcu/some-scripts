@@ -13,40 +13,26 @@ WORKSPACE_PROJECT_NAME="televisa"
 REPOS="client-cms-web,service-editorial,service-editorial-cloud-functions,service-editorial-scheduler"
 BRANCH="main"
 
-VERSION_QA=""
-TAG_QA="-beta"
-
-VERSION_STG=""
-TAG_STG="-rc"
-
-VERSION_PROD=""
+MESSAGE=""
+MERGE_FREE=":free:"
+MERGE_LOCKED=":lock:"
 
 echo "Loading message..."
-MESSAGE=""
 
-## find out SE versions on each ENV
+## find out which repos have branch protection
 for REPO in ${REPOS//,/ }
 do
-    git -C $WORKSPACE/$WORKSPACE_PROJECT_NAME/$REPO tag --sort=-creatordate > .tmp_git_$REPO.json
-    while read line; do
-        if [[ "$VERSION_QA" == "" ]] && [[ $line == *"$TAG_QA" ]]; then
-            VERSION_QA=$line
-        fi
-        if [[ "$VERSION_STG" == "" ]] && [[ $line == *"$TAG_STG" ]]; then
-            VERSION_STG=$line
-        fi
-        if [[ "$VERSION_PROD" == "" ]] && [[ $line != *"$TAG_QA" ]] && [[ $line != *"$TAG_STG" ]]; then
-            VERSION_PROD=$line
-        fi
-    done < .tmp_git_$REPO.json
-    MESSAGE="$MESSAGE{\"type\": \"mrkdwn\",\"text\": \"*$REPO:*\nQA $VERSION_QA\nSTG $VERSION_STG\nPROD $VERSION_PROD\"},"
-    VERSION_PROD=""
-    VERSION_QA=""
-    VERSION_STG=""
+    curl -sL \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/repos/$GITHUB_PROJECT/$REPO/branches/$BRANCH/protection" | grep lock_branch -A 2 > .tmp_git_$REPO.json
+
+    MESSAGE="$MESSAGE{\"type\": \"mrkdwn\",\"text\": \"$REPO $(if grep -q false ".tmp_git_$REPO.json"; then echo $MERGE_FREE; else echo $MERGE_LOCKED; fi) \"},"
 done
 
 echo "Message to show"
-MESSAGE="[{ \"type\": \"header\", \"text\": { \"type\": \"plain_text\", \"text\": \"Versions\"}},{\"type\": \"section\",\"fields\": [$MESSAGE]}]"
+MESSAGE="[{ \"type\": \"header\", \"text\": { \"type\": \"plain_text\", \"text\": \"Main branch protection\"}},{\"type\": \"section\",\"fields\": [$MESSAGE]}]"
 echo "$MESSAGE"
 
 echo ""

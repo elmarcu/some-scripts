@@ -6,11 +6,11 @@
 #SLACK_TOKEN=(get token from https://api.slack.com/authentication/token-types#user)
 #GITHUB_TOKEN=(get token from https://github.com/settings/tokens)
 
-SLACK_CHANNELS="C0317UN5K8D,C05FZ5NB8J1"
+SLACK_CHANNELS="C062ZM9034H"
 SLACK_CHANNELS_DEBUG="C062R58KY9K"
 
 WORKSPACE_PROJECT_NAME="televisa"
-REPOS="client-cms-web,service-editorial,service-editorial-cloud-functions,service-editorial-scheduler"
+REPOS="content-syndicator,descriptive-metadata-service"
 BRANCH="main"
 
 VERSION_QA=""
