@@ -1,11 +1,21 @@
 #!/bin/bash
 #List old QA/STG remote tags. older than 1 month
-git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-1 month" +%Y-%m))"
 
-if [ "purge" == "$1" ]; then
+VALUE="1 month"
 
-  git tag -l | xargs git tag -d && git fetch
-  #delete old tags
-  git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-1 month" +%Y-%m))" | awk '{print $1}' | xargs -n 1 git push --no-verify --delete origin
-  git tag -l | xargs git tag -d && git fetch
-fi
+echo "Refreshing local tags"
+git tag -l | xargs git tag -d && git fetch
+
+echo ""
+echo "Listing old tags"
+git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-$VALUE" +%Y-%m))"
+
+echo ""
+read -p "Remove these old tags? [yes|y|purge|p]" doit
+case $doit in
+  yes|y|purge|p)
+    git for-each-ref --sort=taggerdate --format '%(refname:short) %(taggerdate:short)' refs/tags | egrep "(-rc|-beta)" | egrep -v "($(date +%Y-%m)|$(date -d "-$VALUE" +%Y-%m))" | awk '{print $1}' | xargs -n 1 git push --no-verify --delete origin
+    git tag -l | xargs git tag -d && git fetch
+  ;;
+  *) echo "Aborted" ;;
+esac
