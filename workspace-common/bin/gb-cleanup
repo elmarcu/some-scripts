@@ -1,0 +1,17 @@
+#!/bin/bash
+#remove local branches
+
+MAIN="main"
+MASTER="master"
+
+echo "Refreshing local branches"
+git branch | grep -v $MAIN | grep -v $MASTER
+
+echo ""
+read -p "Remove these local branches? [yes|y|purge|p]" doit
+case $doit in
+  yes|y|purge|p)
+    git branch | grep -v $MAIN | grep -v $MASTER | xargs git branch -D
+  ;;
+  *) echo "Aborted" ;;
+esac
