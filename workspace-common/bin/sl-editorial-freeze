@@ -10,7 +10,7 @@ SLACK_CHANNELS="C0317UN5K8D,C05FZ5NB8J1"
 SLACK_CHANNELS_DEBUG="C062R58KY9K"
 
 WORKSPACE_PROJECT_NAME="televisa"
-REPOS="client-cms-web,service-editorial,service-editorial-cloud-functions,service-editorial-scheduler"
+REPOS="client-cms-web,service-editorial,service-editorial-cloud-functions,service-editorial-scheduler,service-editorial-dependencies-update"
 BRANCH="main"
 
 MESSAGE=""
