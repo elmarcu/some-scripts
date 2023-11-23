@@ -4,6 +4,10 @@ curl ifconfig.me
 ip route | grep default
 ifconfig
 
+#domains
+nslookup [DOMAIN_NAME]
+dig [DOMAIN_NAME]
+
 #list network drivers installed
 lshw -C network
 lspci -nnk | grep -A2 0280
