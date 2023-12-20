@@ -1,0 +1,24 @@
+#docs https://cli.github.com/manual/
+
+# install
+# sudo ln -s $HOME/gh_2.40.1_macOS_amd64/bin/gh /usr/local/bin/gh
+
+# login
+# gh auth
+# step not needed if you use env GITHU_TOKEN
+
+# PR listing 
+gh pr -R televisa-univision/service-editorial list
+gh pr list
+
+# release listing
+gh release list
+
+# release creating
+gh release create
+
+# release creating with notes
+gh release create --notes-from-tag
+Automatically generate notes from annotated tag
+gh release create --notes-start-tag <string>
+Tag to use as the starting point for generating release notes
