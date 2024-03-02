@@ -55,3 +55,8 @@ $HOME/.bin/workspace-generator
 echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspace-common/crontab-scripts)" > .tempfile
 (cat .tempfile ) | crontab -
 rm .tempfile
+
+#watch command
+echo "
+alias watch=$HOME/.bin/watch
+" >> $HOME/.zshrc
