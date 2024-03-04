@@ -25,3 +25,6 @@ Tag to use as the starting point for generating release notes
 
 # secrets 
 gh secret list
+
+# secrets all delete except some
+gh secret list | awk '{print $1}' | grep -v SECRET_1 | grep -v SECRET_2 | while read line; do; echo "gh secret delete $line"; done
