@@ -22,3 +22,6 @@ gh release create --notes-from-tag
 Automatically generate notes from annotated tag
 gh release create --notes-start-tag <string>
 Tag to use as the starting point for generating release notes
+
+# secrets 
+gh secret list
