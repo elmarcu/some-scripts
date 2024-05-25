@@ -42,6 +42,12 @@ export JIRA_PROJECT=$JIRA_PROJECT
 export API_PROJECT=$API_PROJECT
 " >> $HOME/.zshrc
 
+#json parser (alternative to json_pp)
+/bin/bash -c "$(curl -fsSL raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+sudo ln -s /opt/homebrew/bin/brew /usr/local/bin/brew
+brew install jq
+sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
