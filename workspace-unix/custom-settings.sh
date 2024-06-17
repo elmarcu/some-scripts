@@ -42,11 +42,22 @@ export JIRA_PROJECT=$JIRA_PROJECT
 export API_PROJECT=$API_PROJECT
 " >> $HOME/.zshrc
 
+#brew install
+cd /opt
+sudo mkdir -p homebrew
+sudo chown -R $(whoami) homebrew
+curl -L https://github.com/Homebrew/brew/tarball/master |\
+    tar xz --strip 1 -C homebrew
+PATH=/opt/homebrew/bin:$PATH
+
 #json parser (alternative to json_pp)
-/bin/bash -c "$(curl -fsSL raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-sudo ln -s /opt/homebrew/bin/brew /usr/local/bin/brew
 brew install jq
 sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
+
+#node install
+brew install node@20
+echo 'export PATH="/opt/homebrew/opt/node@20/bin:$PATH"' >> ~/.zshrc
+npm i -D typescript
 
 #executables
 mkdir -p $HOME/.bin
