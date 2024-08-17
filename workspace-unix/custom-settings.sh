@@ -48,7 +48,7 @@ sudo mkdir -p homebrew
 sudo chown -R $(whoami) homebrew
 curl -L https://github.com/Homebrew/brew/tarball/master |\
     tar xz --strip 1 -C homebrew
-PATH=/opt/homebrew/bin:$PATH
+echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
 
 #json parser (alternative to json_pp)
 brew install jq
@@ -58,6 +58,10 @@ sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
 brew install node@20
 echo 'export PATH="/opt/homebrew/opt/node@20/bin:$PATH"' >> ~/.zshrc
 npm i -D typescript
+
+#mongo
+brew install mongodb-database-tools
+echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> ~/.zshrc
 
 #executables
 mkdir -p $HOME/.bin
