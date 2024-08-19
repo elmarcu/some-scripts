@@ -100,3 +100,21 @@ db.foo.find().sort({_id:-1});
 
 #find contains string
 db.foo.findOne({"username" : {$regex : "son"}});
+
+
+mongosh queries
+DEV
+Dump DEV DB
+mongodump --gzip --archive=editorial.gz mongodb+srv://[USER]:[PASSWORD]@[HOST]/[DATABASE]
+export DEV users
+mongosh mongodb+srv://[USER]:[PASSWORD]@[HOST]/[DATABASE] --quiet --eval 'db.[COLLECTION].find({},  {email:1, providerData:1, _id:0}).limit(100).toArray()' > [FILE_NAME].json
+
+LOCAL
+Dump a collection
+mongodump --archive=[COLLECTION_NAME].json mongodb://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE] --collection=[COLLECTION_NAME]
+Zipped
+mongodump --gzip --archive=[COLLECTION_NAME].qz mongodb://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE] --collection=[COLLECTION_NAME]
+Find a collection with certain value type
+mongosh mongodb://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE] --quiet --eval 'db.[COLLECTION_NAME].find({ "uiModules": { "$elemMatch": { moduleType: "BECAUSE_YOU_WATCHED" } } })' > test.json
+Remove certain uimodule from a collection
+mongosh mongodb://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE] --quiet --eval 'db.[COLLECTION_NAME].update({ "uiModules": { "$elemMatch": { moduleType: "BECAUSE_YOU_WATCHED" } } }, { $pull: { "uiModules": { moduleType: "BECAUSE_YOU_WATCHED" } } }, {multi: true})'
