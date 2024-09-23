@@ -355,6 +355,9 @@ find DIR  -user USER
 
 #find and change metadata
 find /home/user/dir/ -name *.mp3 | xargs -0 mp3info -a ejem
+
+#list the largest to smallest files in a directory recursively
+find . -type f -exec du -h {} + | sort -rh
 --
 
 #purge logs
