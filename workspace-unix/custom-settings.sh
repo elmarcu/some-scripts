@@ -81,3 +81,5 @@ rm .tempfile
 echo "
 alias watch=$HOME/.bin/watch
 " >> $HOME/.zshrc
+
+source $HOME/.zshrc
