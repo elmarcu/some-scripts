@@ -63,6 +63,11 @@ npm i -D typescript
 brew install mongodb-database-tools
 echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> $HOME/.zshrc
 
+#golang
+brew install go
+which go
+echo 'export PATH="/opt/homebrew/opt/go/bin:$PATH"' >> $HOME/.zshrc
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
