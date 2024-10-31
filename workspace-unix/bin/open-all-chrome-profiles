@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Set the Chrome User Data directory
+chrome_user_data_dir="$HOME/Library/Application Support/Google/Chrome"
+
+# Loop through each profile directory
+find "$chrome_user_data_dir" -maxdepth 1 -type d -name "Profile*" -o -name "Default" | while read -r profile_path; do
+    # Extract just the profile folder name
+    profile=$(basename "$profile_path")
+    
+    # Open a new empty tab in the specified profile
+    #open -na "Google Chrome" --args --profile-directory="$profile" "chrome://newtab" &
+    open -na "Google Chrome" --args --profile-directory="$profile" &
+done
+
+
+#
+# To run this script automatically at login on macOS, you can use Login Items in System Preferences or create a Launch Agent. Here’s how to do it using both methods:
+
+# Method 1: Use Login Items (Easiest)
+# Open System Preferences and go to Users & Groups.
+# Select your user account, then go to the Login Items tab.
+# Click the + button, and select your script file (make sure it’s executable).
+# Add the script to your Login Items, and it will run each time you log in.
+# Note: This method may open a Terminal window each time it runs.
