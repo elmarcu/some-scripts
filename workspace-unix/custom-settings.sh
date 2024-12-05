@@ -63,6 +63,11 @@ npm i -D typescript
 brew install mongodb-database-tools
 echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> $HOME/.zshrc
 
+#mysql
+brew install mysql@8.4
+ln -s /opt/homebrew/opt/mysql@8.4 /opt/homebrew/opt/mysql
+echo 'export PATH="/opt/homebrew/opt/mysql/bin:$PATH"' >> $HOME/.zshrc
+
 #golang
 brew install go
 which go
