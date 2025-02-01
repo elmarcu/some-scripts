@@ -1,0 +1,108 @@
+Here’s a **Linux `screen` Command Cheat Sheet** for quick reference:
+
+---
+
+### **Basic Commands**
+| Command | Description |
+|---------|------------|
+| `screen` | Start a new screen session |
+| `screen -S <name>` | Start a named session |
+| `screen -ls` | List all running screen sessions |
+| `screen -r <name or ID>` | Reattach to a detached session |
+| `screen -d <name or ID>` | Detach a session remotely |
+| `screen -d -r <name or ID>` | Detach and reattach to a session |
+
+---
+
+### **Detaching & Exiting**
+| Command | Description |
+|---------|------------|
+| `Ctrl + A, D` | Detach from the current session |
+| `Ctrl + A, K` | Kill the current session |
+| `Ctrl + A, \` | Kill all windows and exit screen |
+| `exit` | Close a screen session normally |
+
+---
+
+### **Window Management**
+| Command | Description |
+|---------|------------|
+| `Ctrl + A, C` | Create a new window |
+| `Ctrl + A, N` | Switch to the next window |
+| `Ctrl + A, P` | Switch to the previous window |
+| `Ctrl + A, <number>` | Switch to a specific window (e.g., `Ctrl + A, 2`) |
+| `Ctrl + A, "` | List all windows |
+| `Ctrl + A, A` | Toggle between last two windows |
+| `Ctrl + A, K` | Kill the current window |
+
+---
+
+### **Splitting & Navigating Panes**
+| Command | Description |
+|---------|------------|
+| `Ctrl + A, |` | Split screen vertically |
+| `Ctrl + A, S` | Split screen horizontally |
+| `Ctrl + A, Tab` | Switch between panes |
+| `Ctrl + A, X` | Close the active region |
+| `Ctrl + A, Q` | Close all regions except the current one |
+
+---
+
+### **Copy & Paste Mode**
+| Command | Description |
+|---------|------------|
+| `Ctrl + A, [` | Enter copy mode |
+| `Space` | Start selecting text |
+| `Enter` | Copy selected text |
+| `Ctrl + A, ]` | Paste copied text |
+
+---
+
+### **Logging & Monitoring**
+| Command | Description |
+|---------|------------|
+| `Ctrl + A, H` | Start logging output to `screenlog.x` |
+| `Ctrl + A, M` | Monitor for activity in a window |
+| `Ctrl + A, _` | Monitor for silence in a window |
+
+---
+
+### **Customization & Config**
+| Command | Description |
+|---------|------------|
+| `~/.screenrc` | Configuration file for screen |
+| `screen -X <command>` | Send command to a screen session |
+| `Ctrl + A, :` | Enter command mode |
+
+
+If you want to start or attach to a `screen` session in a single SSH command, use:
+
+```bash
+ssh user@remote-server "screen -R -D session_name"
+```
+
+### **Explanation:**
+- `-R` → Reattach if a session exists, or create a new one.
+- `-D` → Detach the session from any other instance before attaching.
+- `session_name` → Replace with a desired session name (optional).
+
+### **Other Variations:**
+1. **Start a new screen session over SSH:**
+   ```bash
+   ssh user@remote-server "screen -S mysession"
+   ```
+
+2. **Attach to an existing screen session:**
+   ```bash
+   ssh user@remote-server "screen -r mysession"
+   ```
+
+3. **Detach others and reattach immediately:**
+   ```bash
+   ssh user@remote-server "screen -D -R mysession"
+   ```
+
+4. **Run a command inside a screen session over SSH:**
+   ```bash
+   ssh user@remote-server "screen -dmS mysession bash -c 'your-command-here'"
+   ```
