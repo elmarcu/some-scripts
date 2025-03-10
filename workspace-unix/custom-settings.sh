@@ -78,6 +78,18 @@ brew install go
 which go
 echo 'export PATH="/opt/homebrew/opt/go/bin:$PATH"' >> $HOME/.zshrc
 
+#gcloud
+brew install --cask google-cloud-sdk
+eecho '# Google Cloud SDK configuration' >> ~/.zshrc
+echo 'source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"' >> ~/.zshrc
+echo 'source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"' >> ~/.zshrc
+gcloud components update
+
+#github cli
+brew install gh
+which gh
+echo 'export PATH="/opt/homebrew/bin/gh:$PATH"' >> $HOME/.zshrc
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
