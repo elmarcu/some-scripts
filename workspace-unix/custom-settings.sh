@@ -12,6 +12,9 @@ read API_PROJECT && export API_PROJECT=$API_PROJECT
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+#iterm2 - wrap
+brew install --cask warp
+
 #githubs repo
 cd $WORKSPACE_PRIVATE
 ssh-keygen
