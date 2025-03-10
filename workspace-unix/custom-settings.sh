@@ -12,9 +12,6 @@ read API_PROJECT && export API_PROJECT=$API_PROJECT
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-#iterm2 - wrap
-brew install --cask warp
-
 #githubs repo
 cd $WORKSPACE_PRIVATE
 ssh-keygen
@@ -46,12 +43,17 @@ export API_PROJECT=$API_PROJECT
 " >> $HOME/.zshrc
 
 #brew install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# OR
 cd /opt
 sudo mkdir -p homebrew
 sudo chown -R $(whoami) homebrew
 curl -L https://github.com/Homebrew/brew/tarball/master |\
     tar xz --strip 1 -C homebrew
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
+
+#wrap
+brew install --cask warp
 
 #json parser (alternative to json_pp)
 brew install jq
