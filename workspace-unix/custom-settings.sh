@@ -54,6 +54,12 @@ echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
 
 #control external monitor brightness with mac
 brew install --cask monitorcontrol
+open /Applications/MonitorControl.app
+
+#containers virtualization
+brew install --cask docker
+brew install --cask podman
+open /Applications/Docker.app
 
 #wrap
 brew install --cask warp
