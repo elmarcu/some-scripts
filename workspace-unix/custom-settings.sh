@@ -52,6 +52,9 @@ curl -L https://github.com/Homebrew/brew/tarball/master |\
     tar xz --strip 1 -C homebrew
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
 
+#control external monitor brightness with mac
+brew install --cask monitorcontrol
+
 #wrap
 brew install --cask warp
 
