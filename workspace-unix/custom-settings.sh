@@ -99,6 +99,10 @@ brew install gh
 which gh
 echo 'export PATH="/opt/homebrew/bin/gh:$PATH"' >> $HOME/.zshrc
 
+#vpn
+brew install openconnect
+#sudo openconnect --protocol=gp yuor-company-vpn.com -u [USER] --passwd-on-stdin
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
