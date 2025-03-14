@@ -39,6 +39,3 @@ alias tmat='tmux at'
 alias tml='tmux list-sessions'
 alias tmatt='tmux attach-session -t'
 alias tmk='tmux kill-session -t'
-
-##SYS
-alias upd='sudo sh -c "apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean"'

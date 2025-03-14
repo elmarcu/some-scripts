@@ -117,9 +117,11 @@ echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspa
 (cat .tempfile ) | crontab -
 rm .tempfile
 
+#custom linux alias
 #watch command
 echo "
 alias watch=$HOME/.bin/watch
+alias upd='brew update && brew upgrade'
 " >> $HOME/.zshrc
 
 source $HOME/.zshrc
