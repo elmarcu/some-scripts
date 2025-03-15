@@ -64,6 +64,9 @@ open /Applications/Docker.app
 #wrap
 brew install --cask warp
 
+#visual code
+brew install --cask visual-studio-code
+
 #json parser (alternative to json_pp)
 brew install jq
 sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
