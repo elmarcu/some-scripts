@@ -61,7 +61,7 @@ brew install --cask docker
 brew install --cask podman
 open /Applications/Docker.app
 
-#wrap
+#warp
 brew install --cask warp
 
 #visual code
