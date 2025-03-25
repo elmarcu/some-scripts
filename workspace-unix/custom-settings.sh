@@ -84,6 +84,8 @@ echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> $HOME/.zshrc
 brew install mysql@8.4
 ln -s /opt/homebrew/opt/mysql@8.4 /opt/homebrew/opt/mysql
 echo 'export PATH="/opt/homebrew/opt/mysql/bin:$PATH"' >> $HOME/.zshrc
+brew install --cask mysqlworkbench
+open /Applications/MySQLWorkbench.app
 
 #golang
 brew install go
