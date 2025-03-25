@@ -22,3 +22,11 @@ kubectl exec -it [POD_NAME] bash
 kubectl config get-contexts
 kubectl config use-context [CONTEXT_NAME]
 kubectl config delete-context [CONTEXT_NAME]
+
+#k8s users and clusters
+kubectl config get-clusters
+kubectl config get-users
+
+#cleanup
+kubectl config unset users.[USER_NAME]
+kubectl config unset clusters.[CLUSTER_NAME]
