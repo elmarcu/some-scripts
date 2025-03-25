@@ -17,3 +17,8 @@ kubectl logs -f [POD_NAME]
 kubectl exec -it [POD_NAME] -- [CMD]
 
 kubectl exec -it [POD_NAME] bash
+
+#k8s context
+kubectl config get-contexts
+kubectl config use-context [CONTEXT_NAME]
+kubectl config delete-context [CONTEXT_NAME]
