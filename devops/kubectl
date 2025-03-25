@@ -30,3 +30,6 @@ kubectl config get-users
 #cleanup
 kubectl config unset users.[USER_NAME]
 kubectl config unset clusters.[CLUSTER_NAME]
+
+#complete cleanup
+rm -rf ~/.kube/config
