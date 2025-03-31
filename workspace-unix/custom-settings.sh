@@ -72,8 +72,8 @@ brew install jq
 sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
 
 #node install
-brew install node@20
-echo 'export PATH="/opt/homebrew/opt/node@20/bin:$PATH"' >> $HOME/.zshrc
+brew install node
+echo 'export PATH="/opt/homebrew/opt/node/bin:$PATH"' >> $HOME/.zshrc
 npm i -D typescript
 
 #mongo
@@ -81,11 +81,15 @@ brew install mongodb-database-tools
 echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> $HOME/.zshrc
 
 #mysql
-brew install mysql@8.4
-ln -s /opt/homebrew/opt/mysql@8.4 /opt/homebrew/opt/mysql
+brew install mysql
+ln -s /opt/homebrew/opt/mysql/opt/homebrew/opt/mysql
 echo 'export PATH="/opt/homebrew/opt/mysql/bin:$PATH"' >> $HOME/.zshrc
 brew install --cask mysqlworkbench
 open /Applications/MySQLWorkbench.app
+
+#dbeaver
+brew install --cask dbeaver-community
+open /Applications/DBeaver.app
 
 #golang
 brew install go
@@ -98,6 +102,9 @@ eecho '# Google Cloud SDK configuration' >> ~/.zshrc
 echo 'source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"' >> ~/.zshrc
 echo 'source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"' >> ~/.zshrc
 gcloud components update
+
+#aws
+brew install awscli
 
 #github cli
 brew install gh
