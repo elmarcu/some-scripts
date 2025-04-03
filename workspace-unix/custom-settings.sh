@@ -133,7 +133,7 @@ rm .tempfile
 #watch command
 echo "
 alias watch=$HOME/.bin/watch
-alias upd='brew update && brew upgrade && omz update'
+alias upd='brew update --force; brew upgrade; omz update'
 " >> $HOME/.zshrc
 
 source $HOME/.zshrc
