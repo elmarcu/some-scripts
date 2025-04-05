@@ -30,7 +30,7 @@ alias ddown='docker-compose down'
 alias dps='watch docker-compose ps'
 alias dinsp='docker inspect -f "{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" $(docker ps -aq)'
 alias dimgs='docker images -a'
-alias drmAll='docker system prune --volumes -f && docker image prune -a -f'
+alias drmAll='docker buildx prune --all --force && docker system prune --volumes -f && docker image prune -a -f'
 alias dsys='tmux new "docker stats --all" ";" split -p 50 "watch docker ps -a"'
 
 ##tmux
