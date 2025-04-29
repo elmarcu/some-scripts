@@ -135,9 +135,4 @@ echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspa
 (cat .tempfile ) | crontab -
 rm .tempfile
 
-#custom update unix alias
-echo "
-alias upd='brew update --force; brew upgrade; brew cleanup; omz update'
-" >> $HOME/.zshrc
-
 source $HOME/.zshrc

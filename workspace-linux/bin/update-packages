@@ -1,0 +1,2 @@
+#custom update linux
+sudo sh -c \"apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean\"'

@@ -85,11 +85,6 @@ $HOME/.bin/workspace-generator
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
 
-#custom update linux alias
-echo "
-alias upd='sudo sh -c \"apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean\"'
-" >> $HOME/.bashrc
-
 #IDE configs
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-sublime.json $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-linux/settings-ide-atom.cson $HOME/.atom/config.cson
