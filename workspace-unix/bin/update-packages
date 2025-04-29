@@ -1,2 +1,4 @@
+#!/bin/zsh
+source ~/.zshrc
 #custom update unix
 brew update --force; brew upgrade; brew cleanup; omz update
