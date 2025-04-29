@@ -118,6 +118,9 @@ brew install openconnect
 #tmux
 brew install tmux
 
+#watch
+brew install watch
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
@@ -132,10 +135,8 @@ echo -e "$(printenv | xargs -n 1)\n$(cat $WORKSPACE_PRIVATE/some-scripts/workspa
 (cat .tempfile ) | crontab -
 rm .tempfile
 
-#custom linux alias
-#watch command
+#custom update unix alias
 echo "
-alias watch=$HOME/.bin/watch
 alias upd='brew update --force; brew upgrade; brew cleanup; omz update'
 " >> $HOME/.zshrc
 

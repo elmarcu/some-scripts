@@ -85,7 +85,7 @@ $HOME/.bin/workspace-generator
 cp $WORKSPACE_PRIVATE/private/profile.jpg $HOME/.face
 sudo cp $WORKSPACE_PRIVATE/private/profile.jpg /var/lib/AccountsService/icons/$USER
 
-#custom linux alias
+#custom update linux alias
 echo "
 alias upd='sudo sh -c \"apt update && apt upgrade -y && apt dist-upgrade -y && snap refresh && apt autoremove -y && apt autoclean && apt clean\"'
 " >> $HOME/.bashrc
