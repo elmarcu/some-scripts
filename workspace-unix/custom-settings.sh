@@ -115,6 +115,9 @@ echo 'export PATH="/opt/homebrew/bin/gh:$PATH"' >> $HOME/.zshrc
 brew install openconnect
 #sudo openconnect --protocol=gp your-company-vpn.com -u [USER] --passwd-on-stdin
 
+#tmux
+brew install tmux
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
