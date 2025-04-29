@@ -42,3 +42,7 @@ alias tmatt='tmux attach-session -t'
 alias tmk='tmux kill-session -t'
 
 ##screen
+alias scr='screen -S'
+alias scrls='screen -ls'
+alias scratt='screen -r'
+alias scrkillall='screen -wipe'
