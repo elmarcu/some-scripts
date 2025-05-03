@@ -106,6 +106,10 @@ gcloud components update
 #aws
 brew install awscli
 
+#terraform
+brew install terraform
+#AWS_PROFILE=HULU_SSO terraform init
+
 #github cli
 brew install gh
 which gh
