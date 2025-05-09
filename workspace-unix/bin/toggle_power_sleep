@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Check current AC power sleep setting
+CURRENT_SLEEP=$(pmset -g custom | awk '/AC Power/ {found=1} found && /^ sleep/ {print $2; exit}')
+CURRENT_KEEP_AWAKE=$(pmset -g custom | awk '/AC Power/ {found=1} found && /ttyskeepawake/ {print $2; exit}')
+
+# Decide toggle state: if sleep is 0 or ttyskeepawake is 1, we consider "prevent sleep" ON
+if [ "$CURRENT_SLEEP" = "0" ] || [ "$CURRENT_KEEP_AWAKE" = "1" ]; then
+  echo "💤 Prevent sleep is currently ON. Turning it OFF (sleep after 15 min, allow system sleep)..."
+  sudo pmset -c sleep 15 ttyskeepawake 0
+else
+  echo "🛑 Prevent sleep is currently OFF. Turning it ON (no system sleep, prevent sleep when display off)..."
+  sudo pmset -c sleep 0 ttyskeepawake 1
+fi
+
+# Show updated settings
+echo
+echo "🔄 Updated AC Power settings:"
+pmset -g custom | grep -A 10 "AC Power"
+echo
+echo "✅ New AC Power settings:"
+pmset -g custom | grep -A 10 "AC Power" | grep -E "sleep|ttyskeepawake"
