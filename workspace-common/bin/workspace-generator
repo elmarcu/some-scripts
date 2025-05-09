@@ -13,8 +13,8 @@ alias gb-protect=$HOME/.bin/gb-protect
 alias workspace-generator=$HOME/.bin/workspace-generator
 alias workspace-puller=$HOME/.bin/workspace-puller
 alias workspace-backups=$HOME/.bin/workspace-backups
-
 alias upd=$HOME/.bin/update-packages
+alias sleep-pwr=$HOME/.bin/toggle-power-sleep
 ' >> $HOME/.bash_aliases
 
 #workspace shortcuts

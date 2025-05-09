@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set_state() {
+  local state="$1"
+  if [ "$state" == "on" ]; then
+    echo "🛑 Enabling prevent sleep mode (sleep = 0, ttyskeepawake = 1)..."
+    sudo pmset -c sleep 0 ttyskeepawake 1
+  elif [ "$state" == "off" ]; then
+    echo "💤 Disabling prevent sleep mode (sleep = 15, ttyskeepawake = 0)..."
+    sudo pmset -c sleep 15 ttyskeepawake 0
+  else
+    echo "❌ Unknown state: $state"
+    exit 1
+  fi
+}
+
+# Determine current settings
+CURRENT_SLEEP=$(pmset -g custom | awk '/AC Power/ {found=1} found && /^ sleep/ {print $2; exit}')
+CURRENT_KEEP_AWAKE=$(pmset -g custom | awk '/AC Power/ {found=1} found && /ttyskeepawake/ {print $2; exit}')
+
+# If parameter passed, force state
+if [ "$1" == "on" ] || [ "$1" == "off" ]; then
+  set_state "$1"
+else
+  # Toggle mode
+  if [ "$CURRENT_SLEEP" = "0" ] || [ "$CURRENT_KEEP_AWAKE" = "1" ]; then
+    set_state "off"
+  else
+    set_state "on"
+  fi
+fi
+
+# Show result
+echo
+echo "✅ Current AC Power settings:"
+pmset -g custom | grep -A 10 "AC Power" | grep -E "sleep|ttyskeepawake"

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set_state() {
+  local state="$1"
+  if [ "$state" == "on" ]; then
+    echo "🛑 Preventing sleep on AC power..."
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+  elif [ "$state" == "off" ]; then
+    echo "💤 Allowing sleep on AC power (15 min)..."
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 900
+  else
+    echo "❌ Unknown state: $state"
+    exit 1
+  fi
+}
+
+# Check current setting
+CURRENT_TYPE=$(gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type)
+CURRENT_TIMEOUT=$(gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout)
+
+# If parameter passed, force state
+if [ "$1" == "on" ] || [ "$1" == "off" ]; then
+  set_state "$1"
+else
+  # Toggle mode
+  if [ "$CURRENT_TYPE" = "'nothing'" ] || [ "$CURRENT_TIMEOUT" -eq 0 ]; then
+    set_state "off"
+  else
+    set_state "on"
+  fi
+fi
+
+# Show result
+echo
+echo "✅ Current AC Power sleep settings:"
+echo "sleep-inactive-ac-type = $CURRENT_TYPE"
+echo "sleep-inactive-ac-timeout = $CURRENT_TIMEOUT"
