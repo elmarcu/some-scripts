@@ -54,12 +54,12 @@ echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
 
 #control external monitor brightness with mac
 brew install --cask monitorcontrol
-open /Applications/MonitorControl.app
+#open /Applications/MonitorControl.app
 
 #containers virtualization
 brew install --cask docker
-brew install --cask podman
-open /Applications/Docker.app
+#brew install --cask podman
+#open /Applications/Docker.app
 
 #warp
 brew install --cask warp
@@ -69,38 +69,29 @@ brew install --cask visual-studio-code
 
 #json parser (alternative to json_pp)
 brew install jq
-sudo ln -s /opt/homebrew/bin/jq /usr/local/bin/jq
 
 #node install
 brew install node
-echo 'export PATH="/opt/homebrew/opt/node/bin:$PATH"' >> $HOME/.zshrc
 npm i -D typescript
 
 #mongo
 brew install mongodb-database-tools
-echo 'export PATH="/opt/homebrew/opt/mongosh/bin:$PATH"' >> $HOME/.zshrc
 
 #mysql
 brew install mysql
 ln -s /opt/homebrew/opt/mysql/opt/homebrew/opt/mysql
-echo 'export PATH="/opt/homebrew/opt/mysql/bin:$PATH"' >> $HOME/.zshrc
 brew install --cask mysqlworkbench
-open /Applications/MySQLWorkbench.app
+#open /Applications/MySQLWorkbench.app
 
 #dbeaver
 brew install --cask dbeaver-community
-open /Applications/DBeaver.app
+#open /Applications/DBeaver.app
 
 #golang
 brew install go
-which go
-echo 'export PATH="/opt/homebrew/opt/go/bin:$PATH"' >> $HOME/.zshrc
 
 #gcloud
 brew install --cask google-cloud-sdk
-eecho '# Google Cloud SDK configuration' >> ~/.zshrc
-echo 'source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"' >> ~/.zshrc
-echo 'source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"' >> ~/.zshrc
 gcloud components update
 
 #aws
@@ -112,8 +103,6 @@ brew install terraform
 
 #github cli
 brew install gh
-which gh
-echo 'export PATH="/opt/homebrew/bin/gh:$PATH"' >> $HOME/.zshrc
 
 #vpn
 brew install openconnect
