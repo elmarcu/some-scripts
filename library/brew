@@ -1,0 +1,11 @@
+# install
+brew install [package]
+
+# update
+brew update --force; brew upgrade; brew cleanup --prune=all
+
+# list
+brew list --formula | grep [package]
+
+# uninstall
+brew uninstall [package]
