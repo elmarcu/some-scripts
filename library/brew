@@ -9,3 +9,8 @@ brew list --formula | grep [package]
 
 # uninstall
 brew uninstall [package]
+
+# tap
+brew tap [repository]
+# untap
+brew untap [repository]
