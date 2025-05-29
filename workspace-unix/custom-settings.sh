@@ -67,12 +67,12 @@ brew install --cask warp
 
 #control external monitor brightness with mac
 brew install --cask monitorcontrol
-#open /Applications/MonitorControl.app
+open /Applications/MonitorControl.app
 
 #containers virtualization
 brew install --cask docker
 #brew install --cask podman
-#open /Applications/Docker.app
+open /Applications/Docker.app
 
 #visual code
 brew install --cask visual-studio-code
