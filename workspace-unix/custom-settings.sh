@@ -9,6 +9,17 @@ read SLACK_TOKEN && export SLACK_TOKEN=$SLACK_TOKEN
 read JIRA_PROJECT && export JIRA_PROJECT=$JIRA_PROJECT
 read API_PROJECT && export API_PROJECT=$API_PROJECT
 
+# Turn OFF natural scrolling (classic scrolling)
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Enable right click (acts like two-button mouse)
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string TwoButton
+defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string TwoButton
+defaults write NSGlobalDomain com.apple.mouse.enableSecondaryClick -bool true
+
+killall Finder
+killall SystemUIServer
+
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
