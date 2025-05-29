@@ -44,13 +44,15 @@ export API_PROJECT=$API_PROJECT
 
 #brew install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# OR
 cd /opt
 sudo mkdir -p homebrew
 sudo chown -R $(whoami) homebrew
 curl -L https://github.com/Homebrew/brew/tarball/master |\
     tar xz --strip 1 -C homebrew
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
+
+#warp
+brew install --cask warp
 
 #control external monitor brightness with mac
 brew install --cask monitorcontrol
@@ -60,9 +62,6 @@ brew install --cask monitorcontrol
 brew install --cask docker
 #brew install --cask podman
 #open /Applications/Docker.app
-
-#warp
-brew install --cask warp
 
 #visual code
 brew install --cask visual-studio-code
