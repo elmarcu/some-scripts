@@ -20,6 +20,9 @@ defaults write NSGlobalDomain com.apple.mouse.enableSecondaryClick -bool true
 killall Finder
 killall SystemUIServer
 
+# Disable the sound effects on boot
+sudo nvram SystemAudioVolume=" "
+
 #bash from https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
