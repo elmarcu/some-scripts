@@ -17,8 +17,16 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -
 defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string TwoButton
 defaults write NSGlobalDomain com.apple.mouse.enableSecondaryClick -bool true
 
+# Set time in 24hs
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+defaults write com.apple.menuextra.clock DateFormat -string "HH:mm"
+
+# Auto-hide the dock
+defaults write com.apple.dock autohide -bool true
+
 killall Finder
 killall SystemUIServer
+killall Dock
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
