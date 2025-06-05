@@ -17,6 +17,11 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -
 defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string TwoButton
 defaults write NSGlobalDomain com.apple.mouse.enableSecondaryClick -bool true
 
+# Enable tap-to-click for the current user
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
 # Set time in 24hs
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 defaults write com.apple.menuextra.clock DateFormat -string "HH:mm"
