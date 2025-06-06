@@ -32,6 +32,11 @@ defaults write com.apple.dock autohide -bool true
 #Remove items from the Trash after 30 days
 defaults write com.apple.finder FXRemoveOldTrashItems -bool true
 
+# Export mac dock settings to a plist file
+#defaults export com.apple.dock $WORKSPACE_PRIVATE/some-scripts/workspace-unix/settings-mac-dock.plist
+# Import mac dock settings from plist
+defaults import com.apple.dock $WORKSPACE_PRIVATE/some-scripts/workspace-unix/settings-mac-dock.plist
+
 killall Finder
 killall SystemUIServer
 killall Dock
