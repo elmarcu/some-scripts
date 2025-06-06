@@ -29,6 +29,9 @@ defaults write com.apple.menuextra.clock DateFormat -string "HH:mm"
 # Auto-hide the dock
 defaults write com.apple.dock autohide -bool true
 
+#Remove items from the Trash after 30 days
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+
 killall Finder
 killall SystemUIServer
 killall Dock
