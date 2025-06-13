@@ -26,6 +26,10 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 defaults write com.apple.menuextra.clock DateFormat -string "HH:mm"
 
+# Enable Night Shift on a schedule (sunset to sunrise)
+defaults write com.apple.CoreBrightness CBBlueReductionAutoSchedule -int 1
+#defaults write com.apple.CoreBrightness CBBlueReductionScheduleNight -dict StartHour -int 0 StartMinute -int 0 EndHour -int 23 EndMinute -int 59
+
 # Auto-hide the dock
 defaults write com.apple.dock autohide -bool true
 
@@ -37,9 +41,8 @@ defaults write com.apple.finder FXRemoveOldTrashItems -bool true
 # Import mac dock settings from plist
 defaults import com.apple.dock $WORKSPACE_PRIVATE/some-scripts/workspace-unix/settings-mac-dock.plist
 
-killall Finder
-killall SystemUIServer
-killall Dock
+# refresh
+killall ControlCenter SystemUIServer Dock Finder NotificationCenter cfprefsd
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
