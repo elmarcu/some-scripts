@@ -151,6 +151,9 @@ brew install tmux
 #watch
 brew install watch
 
+#torrents
+brew install --cask transmission
+
 #executables
 mkdir -p $HOME/.bin
 cp $WORKSPACE_PRIVATE/some-scripts/workspace-common/bin/* $HOME/.bin/
