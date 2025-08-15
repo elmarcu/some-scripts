@@ -41,6 +41,9 @@ defaults write com.apple.finder FXRemoveOldTrashItems -bool true
 # Import mac dock settings from plist
 defaults import com.apple.dock $WORKSPACE_PRIVATE/some-scripts/workspace-unix/settings-mac-dock.plist
 
+# Set the default location for screenshots to Downloads
+defaults write com.apple.screencapture location ~/Downloads/
+
 # refresh
 killall ControlCenter SystemUIServer Dock Finder NotificationCenter cfprefsd
 
