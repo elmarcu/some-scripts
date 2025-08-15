@@ -89,6 +89,10 @@ curl -L https://github.com/Homebrew/brew/tarball/master |\
     tar xz --strip 1 -C homebrew
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
 
+#htop
+brew install htop
+brew install -cask stats
+
 #warp
 brew install --cask warp
 
