@@ -1,4 +1,4 @@
 #!/bin/zsh
 source ~/.zshrc
 #custom update unix
-brew update --force; brew upgrade; brew cleanup --prune=all; omz update
+brew update --force; brew upgrade; brew upgrade warp; brew upgrade --cask warp; brew cleanup --prune=all; omz update
