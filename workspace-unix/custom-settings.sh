@@ -25,6 +25,7 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # Set time in 24hs
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 defaults write com.apple.menuextra.clock DateFormat -string "HH:mm"
+sudo defaults write /Library/Preferences/.GlobalPreferences AppleICUForce24HourTime -bool true
 
 # Enable Night Shift on a schedule (sunset to sunrise)
 defaults write com.apple.CoreBrightness CBBlueReductionAutoSchedule -int 1
