@@ -100,6 +100,10 @@ brew install -cask stats
 #warp
 brew install --cask warp
 
+#rclone
+brew install rclone
+rclone config
+
 #control external monitor brightness with mac
 brew install --cask monitorcontrol
 open /Applications/MonitorControl.app
